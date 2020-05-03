@@ -48,19 +48,19 @@ public class Home_activity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
-                    case R.id.item1:
+                    case R.id.home_option:
                         return true;
 
-                    case R.id.item2:
+                    case R.id.assignments_option:
                         return true;
 
-                    case R.id.item3:
+                    case R.id.membership_option:
                         return true;
 
-                    case R.id.item4:
+                    case R.id.forum_option:
                         return true;
 
-                    case R.id.item5:
+                    case R.id.edit_profile_option:
                         return true;
 
                 }

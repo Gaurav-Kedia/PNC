@@ -2,20 +2,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/item1"
-            android:title="item1"></item>
+            android:id="@+id/home_option"
+            android:icon="@drawable/ic_home"
+            android:title="Home"></item>
         <item
-            android:id="@+id/item2"
-            android:title="item2"></item>
+            android:id="@+id/assignments_option"
+            android:icon="@drawable/assignment"
+            android:title="Assignments"></item>
         <item
-            android:id="@+id/item3"
-            android:title="item3"></item>
+            android:id="@+id/membership_option"
+            android:icon="@drawable/ic_profile"
+            android:title="Membership"></item>
         <item
-            android:id="@+id/item4"
-            android:title="item4"></item>
+            android:id="@+id/forum_option"
+            android:icon="@drawable/ic_forum"
+            android:title="Forum"></item>
         <item
-            android:id="@+id/item5"
-            android:title="item5"></item>
+            android:id="@+id/edit_profile_option"
+            android:icon="@drawable/ic_profile_"
+            android:title="Edit Profile"></item>
 
     </group>
 </menu>

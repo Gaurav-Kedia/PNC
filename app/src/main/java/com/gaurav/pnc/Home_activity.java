@@ -12,26 +12,43 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
 
 public class Home_activity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private ActionBarDrawerToggle mtoggle;
     private FirebaseAuth mAuth;
+    private DatabaseReference rootref;
+    private String currentuserid;
+
+    private View mHeader;
+    private ActionBarDrawerToggle mtoggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
         mAuth = FirebaseAuth.getInstance();
+        currentuserid = mAuth.getCurrentUser().getUid();
+        rootref = FirebaseDatabase.getInstance().getReference();
 
         toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -39,10 +56,13 @@ public class Home_activity extends AppCompatActivity {
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
+        mHeader = navigationView.getHeaderView(0);
+        TextView header_name = mHeader.findViewById(R.id.header_user_name);
+        TextView header_email = mHeader.findViewById(R.id.header_user_email);
 
-        //mtoggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
+        mtoggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
         drawerLayout.addDrawerListener(mtoggle);
-        //mtoggle.syncState();
+        mtoggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -67,6 +87,7 @@ public class Home_activity extends AppCompatActivity {
                 return true;
             }
         });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     @Override
     protected void onStart() {
@@ -75,10 +96,34 @@ public class Home_activity extends AppCompatActivity {
             SendUserToLoginActivity();
         }
         else{
-           /* updateuserstatus("online");
-            verifyuserexistance();*/
+            updateuserstatus("online");
+            verifyuserexistance();
         }
         super.onStart();
+    }
+
+    private void verifyuserexistance() {
+        rootref.child("Users").child(currentuserid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child("name").exists()) {
+                    //Toast.makeText(MainActivity.this, "welcome", Toast.LENGTH_SHORT).show();
+                } else {
+                    //Toast.makeText(MainActivity.this, "", Toast.LENGTH_SHORT).show();
+                    SendUserToProfileActivity();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void SendUserToProfileActivity() {
+        startActivity(new Intent(Home_activity.this, Profile_Activity.class));
+        //finish();
     }
 
     private void SendUserToLoginActivity() {
@@ -87,6 +132,9 @@ public class Home_activity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (mtoggle.onOptionsItemSelected(item)) {
+            return true;
+        }
         switch (item.getItemId()){
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
@@ -97,9 +145,6 @@ public class Home_activity extends AppCompatActivity {
                 finish();
                 return true;
         }
-        /*if(mtoggle.onOptionsItemSelected(item)){
-            return true;
-        }*/
         return super.onOptionsItemSelected(item);
     }
 
@@ -107,5 +152,25 @@ public class Home_activity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.logout, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void updateuserstatus(String state) {
+        String savecurrenttime, savecurrentdate;
+        Calendar calender = Calendar.getInstance();
+
+        SimpleDateFormat currentdate = new SimpleDateFormat("MMM dd, yyyy");
+        savecurrentdate = currentdate.format(calender.getTime());
+
+        SimpleDateFormat currenttime = new SimpleDateFormat("hh:mm a");
+        savecurrenttime = currenttime.format(calender.getTime());
+
+        HashMap<String, Object> onlineStatemap = new HashMap<>();
+        onlineStatemap.put("time", savecurrenttime);
+        onlineStatemap.put("date", savecurrentdate);
+        onlineStatemap.put("state", state);
+
+        currentuserid = mAuth.getCurrentUser().getUid();
+        rootref.child("Users").child(currentuserid)
+                .updateChildren(onlineStatemap);
     }
 }

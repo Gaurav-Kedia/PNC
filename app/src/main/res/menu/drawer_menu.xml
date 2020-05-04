@@ -21,6 +21,5 @@
             android:id="@+id/edit_profile_option"
             android:icon="@drawable/ic_profile_"
             android:title="Edit Profile"></item>
-
     </group>
 </menu>

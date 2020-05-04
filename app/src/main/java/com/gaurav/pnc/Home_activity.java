@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,6 +40,8 @@ public class Home_activity extends AppCompatActivity {
     private View mHeader;
     private ActionBarDrawerToggle mtoggle;
 
+    private Button courses;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,7 @@ public class Home_activity extends AppCompatActivity {
         currentuserid = mAuth.getCurrentUser().getUid();
         rootref = FirebaseDatabase.getInstance().getReference();
 
+        courses = findViewById(R.id.coursebtn);
         toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
@@ -88,6 +92,16 @@ public class Home_activity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        courses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Home_activity.this,Courses.class);
+                i.putExtra("Course","JEE MAIN");
+                startActivity(i);
+            }
+        });
+
     }
     @Override
     protected void onStart() {

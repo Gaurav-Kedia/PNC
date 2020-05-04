@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Courses"></activity>
         <activity
             android:name=".Profile_Activity"
-            android:parentActivityName=".Home_activity"></activity>
+            android:parentActivityName=".Home_activity" />
         <activity android:name=".login_activity" />
         <activity android:name=".Home_activity">
             <intent-filter>

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -49,7 +50,7 @@ public class Courses extends AppCompatActivity {
 
         cname.setText(cource);
 
-        subjects.setLayoutManager(new GridLayoutManager(this,3));
+        subjects.setLayoutManager(new GridLayoutManager(this,2));
 
         loadSubjects();
         subjects.setAdapter(new myadaptor(cources));
@@ -57,19 +58,20 @@ public class Courses extends AppCompatActivity {
 
     public void loadSubjects(){
 //       TODO : a recycler adapter to be added
+
         courseref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for(DataSnapshot t:dataSnapshot.getChildren()){
                     cources.add(t.getKey());
+                    Log.d("My Data :",t.getKey());
                 }
                 subjects.setAdapter(new myadaptor(cources));
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
     }

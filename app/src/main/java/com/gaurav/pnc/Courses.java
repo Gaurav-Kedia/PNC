@@ -2,12 +2,14 @@ package com.gaurav.pnc;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,7 +63,11 @@ public class Courses extends AppCompatActivity {
 
         cname.setText(cource);
 
-        subjects.setLayoutManager(new GridLayoutManager(this,2));
+        DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
+        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+
+        subjects.setLayoutManager(new GridLayoutManager(this, (int) (dpWidth/180)));
 
         loadSubjects();
     }

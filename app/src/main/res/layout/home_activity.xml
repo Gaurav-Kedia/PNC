@@ -8,6 +8,13 @@
     android:id="@+id/drawer_layout"
     tools:context=".Home_activity">
 
+    <ProgressBar
+        android:id="@+id/ProgressBB"
+        style="?android:attr/indeterminateProgressStyle"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:progressTint="@color/colorPrimaryDark" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/course_list_recycler_view"
         android:layout_width="match_parent"

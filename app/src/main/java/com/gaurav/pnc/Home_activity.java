@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.gaurav.pnc.Adapters.Course_list_adapter;
@@ -39,6 +40,7 @@ public class Home_activity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private ProgressBar pb;
     private FirebaseAuth mAuth;
     private DatabaseReference rootref;
 
@@ -77,6 +79,7 @@ public class Home_activity extends AppCompatActivity {
 
                     courselist.add(crs);
                 }
+                pb.setVisibility(View.INVISIBLE);
                 adapter = new Course_list_adapter(Home_activity.this, courselist);
                 recycler.setAdapter(adapter);
             }
@@ -155,9 +158,14 @@ public class Home_activity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
+        navigationView.getMenu().getItem(0).setChecked(true);
+
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+
+        pb = findViewById(R.id.ProgressBB);
+        pb.setVisibility(View.VISIBLE);
 
         mHeader = navigationView.getHeaderView(0);
         TextView header_name = mHeader.findViewById(R.id.header_user_name);

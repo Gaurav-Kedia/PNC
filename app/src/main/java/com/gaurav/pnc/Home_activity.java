@@ -1,8 +1,6 @@
 package com.gaurav.pnc;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -11,16 +9,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.VideoView;
 
+import com.gaurav.pnc.Adapters.Course_list_adapter;
+import com.gaurav.pnc.Models.Course_list_model;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,48 +30,65 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 public class Home_activity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private ProgressBar pb;
     private FirebaseAuth mAuth;
     private DatabaseReference rootref;
-    private String currentuserid;
 
     private View mHeader;
     private ActionBarDrawerToggle mtoggle;
 
-    private Button courses;
+    private List<Course_list_model> courselist = new ArrayList<>();
+    private DatabaseReference course_list_ref;
+    private Course_list_adapter adapter;
+    private RecyclerView recycler;
+
+    private String currentuserid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
+        initialise();
+
         mAuth = FirebaseAuth.getInstance();
         currentuserid = mAuth.getCurrentUser().getUid();
         rootref = FirebaseDatabase.getInstance().getReference();
+        course_list_ref = FirebaseDatabase.getInstance().getReference("course_list");
 
-        courses = findViewById(R.id.coursebtn);
-        toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        recycler.setHasFixedSize(true);
+        recycler.setLayoutManager(new LinearLayoutManager(this));
+        course_list_ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot courseSnapshot : dataSnapshot.getChildren()) {
+                    Course_list_model p = courseSnapshot.getValue(Course_list_model.class);
+                    Course_list_model crs = new Course_list_model();
 
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+                    String course = p.getCourse();
+                    crs.setCourse(course);
 
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.navigationView);
-        mHeader = navigationView.getHeaderView(0);
-        TextView header_name = mHeader.findViewById(R.id.header_user_name);
-        TextView header_email = mHeader.findViewById(R.id.header_user_email);
+                    courselist.add(crs);
+                }
+                pb.setVisibility(View.INVISIBLE);
+                adapter = new Course_list_adapter(Home_activity.this, courselist);
+                recycler.setAdapter(adapter);
+            }
 
-        mtoggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
-        drawerLayout.addDrawerListener(mtoggle);
-        mtoggle.syncState();
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -90,31 +107,13 @@ public class Home_activity extends AppCompatActivity {
                         return true;
 
                     case R.id.edit_profile_option:
+                        SendUserToProfileActivity();
                         return true;
 
                 }
                 return true;
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        courses.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Home_activity.this,Courses.class);
-                i.putExtra("Course","JEE MAIN");
-                startActivity(i);
-            }
-        });
-
-    }
-
-    public void gotoCourse(View view){
-        Button b = (Button)view;
-        String buttonText = b.getText().toString();
-        Intent i = new Intent(Home_activity.this,Courses.class);
-        i.putExtra("Course",buttonText.toUpperCase());
-        startActivity(i);
     }
 
     @Override
@@ -128,6 +127,54 @@ public class Home_activity extends AppCompatActivity {
             verifyuserexistance();
         }
         super.onStart();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (mtoggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        switch (item.getItemId()){
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+            case R.id.logout_option:
+                mAuth.signOut();
+                SendUserToLoginActivity();
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.logout, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public void initialise() {
+        recycler = findViewById(R.id.course_list_recycler_view);
+        toolbar = findViewById(R.id.toolbar);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.navigationView);
+        navigationView.getMenu().getItem(0).setChecked(true);
+
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+
+        pb = findViewById(R.id.ProgressBB);
+        pb.setVisibility(View.VISIBLE);
+
+        mHeader = navigationView.getHeaderView(0);
+        TextView header_name = mHeader.findViewById(R.id.header_user_name);
+        TextView header_phone = mHeader.findViewById(R.id.header_user_email);
+
+        mtoggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
+        drawerLayout.addDrawerListener(mtoggle);
+        mtoggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void verifyuserexistance() {
@@ -156,30 +203,6 @@ public class Home_activity extends AppCompatActivity {
 
     private void SendUserToLoginActivity() {
         startActivity(new Intent(Home_activity.this, login_activity.class));
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (mtoggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        switch (item.getItemId()){
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
-            case R.id.logout_option:
-                mAuth.signOut();
-                SendUserToLoginActivity();
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.logout, menu);
-        return super.onCreateOptionsMenu(menu);
     }
 
     private void updateuserstatus(String state) {

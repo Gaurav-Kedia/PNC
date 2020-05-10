@@ -6,25 +6,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout"
-    android:fitsSystemWindows="true"
     tools:context=".Home_activity">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:gravity="center">
-        <Button
-            android:id="@+id/coursebtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Jee main"/>
-        <Button
-            android:onClick="gotoCourse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="NEET"/>
 
-    </LinearLayout>
+    <ProgressBar
+        android:id="@+id/ProgressBB"
+        style="?android:attr/indeterminateProgressStyle"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:progressTint="@color/colorPrimaryDark" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/course_list_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <android.support.design.widget.NavigationView
         android:layout_width="wrap_content"
         android:id="@+id/navigationView"

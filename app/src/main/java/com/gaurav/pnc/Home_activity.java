@@ -61,7 +61,14 @@ public class Home_activity extends AppCompatActivity {
         initialise();
 
         mAuth = FirebaseAuth.getInstance();
-        currentuserid = mAuth.getCurrentUser().getUid();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            currentuserid = mAuth.getCurrentUser().getUid();
+        }
+
+
+//        currentuserid = mAuth.getCurrentUser().getUid();
         rootref = FirebaseDatabase.getInstance().getReference();
         course_list_ref = FirebaseDatabase.getInstance().getReference("course_list");
 

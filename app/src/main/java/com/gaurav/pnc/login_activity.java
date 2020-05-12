@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class login_activity extends AppCompatActivity {
@@ -148,7 +149,7 @@ public class login_activity extends AppCompatActivity {
         startActivity(mainactivity);
 
         DatabaseReference rootref = FirebaseDatabase.getInstance().getReference();
-        String currentuserid = mAuth.getCurrentUser().getUid();
+        String currentuserid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
 
         HashMap<String, Object> onlineStatemap = new HashMap<>();
         onlineStatemap.put("phone", phoneNumber);

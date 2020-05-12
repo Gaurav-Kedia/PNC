@@ -1,15 +1,24 @@
 package com.gaurav.pnc.Models;
 
 public class User_info {
-    private String name, phone, status;
+    private String name, phone, status, designation;
 
     public User_info() {
     }
 
-    public User_info(String name, String phone, String status) {
+    public User_info(String name, String phone, String status, String designation) {
         this.name = name;
         this.phone = phone;
         this.status = status;
+        this.designation = designation;
+    }
+
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
     }
 
     public String getStatus() {

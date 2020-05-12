@@ -23,7 +23,6 @@ public class Find_faculty extends AppCompatActivity {
     private Toolbar mtoolbar;
     private RecyclerView FindFriendRecyclerList;
     private DatabaseReference UserRef;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +42,7 @@ public class Find_faculty extends AppCompatActivity {
                 .setQuery(UserRef, User_info.class)
                 .build();
 
-        FirebaseRecyclerAdapter<User_info, FindFriendsViewHolder> adapter =
-                new FirebaseRecyclerAdapter<User_info, FindFriendsViewHolder>(options) {
+        FirebaseRecyclerAdapter<User_info, FindFriendsViewHolder> adapter = new FirebaseRecyclerAdapter<User_info, FindFriendsViewHolder>(options) {
                     @Override
                     protected void onBindViewHolder(@NonNull FindFriendsViewHolder holder, final int position, @NonNull User_info model) {
                         holder.username.setText(model.getName());
@@ -61,7 +59,6 @@ public class Find_faculty extends AppCompatActivity {
                             }
                         });
                     }
-
                     @NonNull
                     @Override
                     public FindFriendsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {

@@ -18,7 +18,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class login_activity extends AppCompatActivity {
@@ -30,6 +36,7 @@ public class login_activity extends AppCompatActivity {
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private FirebaseAuth mAuth;
     private ProgressDialog loadingBar;
+    private String phoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +44,12 @@ public class login_activity extends AppCompatActivity {
         setContentView(R.layout.login_activity);
         mAuth = FirebaseAuth.getInstance();
         initialise();
+
         loadingBar = new ProgressDialog(this);
         sendverificationbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phoneNumber = inputphonenumber.getText().toString();
+                phoneNumber = inputphonenumber.getText().toString();
                 if (TextUtils.isEmpty(phoneNumber)) {
                     Toast.makeText(login_activity.this, "Enter valid number", Toast.LENGTH_SHORT).show();
                 } else {
@@ -128,6 +136,7 @@ public class login_activity extends AppCompatActivity {
                             Toast.makeText(login_activity.this, "logged in success", Toast.LENGTH_SHORT).show();
                             SendUserToMMainActivity();
                         } else {
+                            loadingBar.dismiss();
                             String msg = task.getException().toString();
                             Toast.makeText(login_activity.this, msg, Toast.LENGTH_SHORT).show();
                         }
@@ -138,6 +147,19 @@ public class login_activity extends AppCompatActivity {
     private void SendUserToMMainActivity() {
         Intent mainactivity = new Intent(login_activity.this, Home_activity.class);
         startActivity(mainactivity);
+
+        DatabaseReference rootref = FirebaseDatabase.getInstance().getReference();
+        String currentuserid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+
+        HashMap<String, Object> onlineStatemap = new HashMap<>();
+        onlineStatemap.put("phone", phoneNumber);
+        onlineStatemap.put("membership", "demo");
+        onlineStatemap.put("designation", "student");
+        onlineStatemap.put("status", "null_student");
+
+        rootref.child("Users").child(currentuserid)
+                .updateChildren(onlineStatemap);
+
         finish();
     }
 }

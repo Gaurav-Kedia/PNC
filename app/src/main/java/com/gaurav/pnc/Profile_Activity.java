@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.gaurav.pnc.Models.User_info;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,13 +21,13 @@ public class Profile_Activity extends AppCompatActivity {
     private DatabaseReference rootref;
     private String currentuserid;
 
-    private EditText name;
+    private EditText name, phone;
     private Button updatebutton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_);
+        setContentView(R.layout.activity_self_profile_);
         mAuth = FirebaseAuth.getInstance();
         currentuserid = mAuth.getCurrentUser().getUid();
         rootref = FirebaseDatabase.getInstance().getReference();
@@ -45,23 +46,25 @@ public class Profile_Activity extends AppCompatActivity {
     }
 
     private void retrieveuserinfo() {
-        rootref.child("Users").child(currentuserid).child("name")
-                .addValueEventListener(new ValueEventListener() {
+        rootref.child("Users").child(currentuserid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String user_name = dataSnapshot.getValue().toString().trim();
-                        name.setText(user_name);
+                        if (dataSnapshot.exists()) {
+                            User_info info = dataSnapshot.getValue(User_info.class);
+                            name.setText(info.getName());
+                            phone.setText(info.getPhone());
+                        }
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
                     }
                 });
     }
 
     private void initializefields() {
         name = findViewById(R.id.fullname);
+        phone = findViewById(R.id.phone_ui);
         updatebutton = findViewById(R.id.update_button);
     }
 }

@@ -11,11 +11,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -37,7 +35,6 @@ import java.util.List;
 
 public class Home_activity extends AppCompatActivity {
 
-    private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ProgressBar pb;
@@ -51,7 +48,6 @@ public class Home_activity extends AppCompatActivity {
     private DatabaseReference course_list_ref;
     private Course_list_adapter adapter;
     private RecyclerView recycler;
-
     private String currentuserid;
 
     @Override
@@ -61,46 +57,16 @@ public class Home_activity extends AppCompatActivity {
         initialise();
 
         mAuth = FirebaseAuth.getInstance();
-
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            currentuserid = mAuth.getCurrentUser().getUid();
-        }
-
-
-//        currentuserid = mAuth.getCurrentUser().getUid();
         rootref = FirebaseDatabase.getInstance().getReference();
-        course_list_ref = FirebaseDatabase.getInstance().getReference("course_list");
 
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(new LinearLayoutManager(this));
-        course_list_ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot courseSnapshot : dataSnapshot.getChildren()) {
-                    Course_list_model p = courseSnapshot.getValue(Course_list_model.class);
-                    Course_list_model crs = new Course_list_model();
-
-                    String course = p.getCourse();
-                    crs.setCourse(course);
-
-                    courselist.add(crs);
-                }
-                pb.setVisibility(View.INVISIBLE);
-                adapter = new Course_list_adapter(Home_activity.this, courselist);
-                recycler.setAdapter(adapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        inflate_recycler_view();
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
                     case R.id.home_option:
                         return true;
 
@@ -111,6 +77,7 @@ public class Home_activity extends AppCompatActivity {
                         return true;
 
                     case R.id.forum_option:
+                        SendUserToForumActivity();
                         return true;
 
                     case R.id.edit_profile_option:
@@ -126,11 +93,9 @@ public class Home_activity extends AppCompatActivity {
     @Override
     protected void onStart() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser == null){
+        if (currentUser == null) {
             SendUserToLoginActivity();
-        }
-        else{
-            updateuserstatus("online");
+        } else {
             verifyuserexistance();
         }
         super.onStart();
@@ -141,7 +106,7 @@ public class Home_activity extends AppCompatActivity {
         if (mtoggle.onOptionsItemSelected(item)) {
             return true;
         }
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
@@ -162,7 +127,6 @@ public class Home_activity extends AppCompatActivity {
 
     public void initialise() {
         recycler = findViewById(R.id.course_list_recycler_view);
-        toolbar = findViewById(R.id.toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
         navigationView.getMenu().getItem(0).setChecked(true);
@@ -185,13 +149,13 @@ public class Home_activity extends AppCompatActivity {
     }
 
     private void verifyuserexistance() {
+        currentuserid = mAuth.getCurrentUser().getUid();
         rootref.child("Users").child(currentuserid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child("name").exists()) {
-                    //Toast.makeText(MainActivity.this, "welcome", Toast.LENGTH_SHORT).show();
+                    updateuserstatus("online");
                 } else {
-                    //Toast.makeText(MainActivity.this, "", Toast.LENGTH_SHORT).show();
                     SendUserToProfileActivity();
                 }
             }
@@ -205,11 +169,15 @@ public class Home_activity extends AppCompatActivity {
 
     private void SendUserToProfileActivity() {
         startActivity(new Intent(Home_activity.this, Profile_Activity.class));
-        //finish();
     }
 
     private void SendUserToLoginActivity() {
         startActivity(new Intent(Home_activity.this, login_activity.class));
+        finish();
+    }
+
+    private void SendUserToForumActivity() {
+        startActivity(new Intent(Home_activity.this, Forum_activity.class));
     }
 
     private void updateuserstatus(String state) {
@@ -230,5 +198,28 @@ public class Home_activity extends AppCompatActivity {
         currentuserid = mAuth.getCurrentUser().getUid();
         rootref.child("Users").child(currentuserid)
                 .updateChildren(onlineStatemap);
+    }
+
+    private void inflate_recycler_view() {
+        course_list_ref = FirebaseDatabase.getInstance().getReference("Cources");
+        course_list_ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snap : dataSnapshot.getChildren()) {
+                    String name = snap.getKey();
+                    Course_list_model crs = new Course_list_model();
+                    crs.setCourse(name);
+                    courselist.add(crs);
+                }
+                pb.setVisibility(View.INVISIBLE);
+                adapter = new Course_list_adapter(Home_activity.this, courselist);
+                recycler.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

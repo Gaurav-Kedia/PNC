@@ -36,8 +36,6 @@ public class Courses extends AppCompatActivity {
     private DatabaseReference rootref;
     private DatabaseReference courseref;
 
-    private ArrayList<String> cources = new ArrayList<>() ;
-
     public FirebaseRecyclerAdapter adapter;
 
     @Override
@@ -65,24 +63,19 @@ public class Courses extends AppCompatActivity {
     }
 
     public void loadSubjects(){
-
-
         ProgressDialog loadingBar;
         loadingBar = new ProgressDialog(this);
         loadingBar.setCancelable(false);
         loadingBar.setTitle("Loading....!");
-        loadingBar.setMessage("Plaese Wait");
+        loadingBar.setMessage("Please Wait");
         loadingBar.show();
 
         Query query = courseref;
-
-
         FirebaseRecyclerOptions<Subject> options =
                 new FirebaseRecyclerOptions.Builder<Subject>()
                         .setQuery(query, new SnapshotParser<Subject>() {
-                            @NonNull
                             @Override
-                            public Subject parseSnapshot(@NonNull DataSnapshot snapshot) {
+                            public Subject parseSnapshot(DataSnapshot snapshot) {
                                 Log.d("My Snap :",snapshot.toString());
                                 return new Subject(snapshot.getKey(),snapshot.child("img").getValue().toString());
                             }

@@ -57,6 +57,7 @@ public class Courses extends AppCompatActivity {
         rootref = FirebaseDatabase.getInstance().getReference();
 
         cource = getIntent().getStringExtra("Course");
+
         courseref = rootref.child("Cources").child(cource);
 
         cname.setText(cource);
@@ -71,7 +72,7 @@ public class Courses extends AppCompatActivity {
     }
 
     public void loadSubjects(){
-        ProgressDialog loadingBar;
+        final ProgressDialog loadingBar;
         loadingBar = new ProgressDialog(this);
         loadingBar.setCancelable(false);
         loadingBar.setTitle("Loading....!");
@@ -85,8 +86,10 @@ public class Courses extends AppCompatActivity {
                             @Override
                             public Subject parseSnapshot(DataSnapshot snapshot) {
                                 Log.d("My Snap :",snapshot.toString());
+                                loadingBar.dismiss();
                                 return new Subject(snapshot.getKey(),snapshot.child("img").getValue().toString());
                             }
+
                         })
                         .build();
 
@@ -108,7 +111,10 @@ public class Courses extends AppCompatActivity {
                 holder.subject_card.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getApplicationContext(),"Course : "+cource+" Subject :"+model.getName(),Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(getApplicationContext(),SubjectPageActivity.class);
+                        i.putExtra("cource",cource);
+                        i.putExtra("sujectName",model.getName());
+                        startActivity(i);
                     }
                 });
 
@@ -116,7 +122,7 @@ public class Courses extends AppCompatActivity {
         };
 
         subjects.setAdapter(adapter);
-        loadingBar.dismiss();
+
 
     }
 

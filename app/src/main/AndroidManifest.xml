@@ -11,7 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SubjectPageActivity"></activity>
+        <activity android:name=".VideoList"
+            android:parentActivityName=".SubjectPageActivity"
+            ></activity>
+        <activity android:name=".SubjectPageActivity"
+            android:parentActivityName="Courses"  />
         <activity
             android:name=".ChatActivity"
             android:parentActivityName=".Forum_activity" />

@@ -8,13 +8,18 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -25,10 +30,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+
 public class SubjectPageActivity extends AppCompatActivity {
 
-    private TextView cname,sname;
-    private String Course;
+    private TextView cname, sname;
+    private String Course,subject;
     RecyclerView chapterlist;
     private DatabaseReference rootref;
     private DatabaseReference chapteref;
@@ -46,6 +52,7 @@ public class SubjectPageActivity extends AppCompatActivity {
         chapterlist.setLayoutManager(new LinearLayoutManager(this));
 
         Course = getIntent().getStringExtra("cource");
+        subject = getIntent().getStringExtra("sujectName");
         cname.setText(getIntent().getStringExtra("cource"));
         sname.setText(getIntent().getStringExtra("sujectName"));
 
@@ -78,27 +85,55 @@ public class SubjectPageActivity extends AppCompatActivity {
                             @Override
                             public Chapter parseSnapshot(DataSnapshot snapshot) {
                                 loadingBar.dismiss();
-                                return new Chapter(snapshot.getKey()+" . "+snapshot.child("name").getValue().toString());
+                                return new Chapter(snapshot.getKey() + " . " + snapshot.child("name").getValue().toString());
                             }
 
                         })
                         .build();
-        adapter = new  FirebaseRecyclerAdapter<Chapter,MyChapterViewHolder>(options){
+        adapter = new FirebaseRecyclerAdapter<Chapter, MyChapterViewHolder>(options) {
 
             @NonNull
             @Override
             public MyChapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-                View viewHolder = LayoutInflater.from(parent.getContext()).inflate(R.layout.each_chapter,parent,false);
+                View viewHolder = LayoutInflater.from(parent.getContext()).inflate(R.layout.each_chapter, parent, false);
                 return new MyChapterViewHolder(viewHolder);
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull MyChapterViewHolder holder, int position, @NonNull final Chapter model) {
+            protected void onBindViewHolder(@NonNull final MyChapterViewHolder holder, final int position, @NonNull final Chapter model) {
                 holder.chaptername.setText(model.getName());
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                holder.chaptername.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getApplicationContext(),"Clicked "+model.getName(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Clicked " + model.getName(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                holder.Videobtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(getApplicationContext(), VideoList.class);
+                        i.putExtra("cource",Course);
+                        i.putExtra("sujectName",subject);
+                        i.putExtra("Chapter",model.getName());
+                        startActivity(i);
+                    }
+                });
+
+                holder.chaptername.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (model.isExpanded()) {
+                            TransitionManager.beginDelayedTransition(holder.fullCard, new AutoTransition());
+                            holder.expndView.setVisibility(View.GONE);
+                            holder.chaptername.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.arrow_down, 0);
+                            model.setExpanded(!model.isExpanded());
+                        } else {
+                            TransitionManager.beginDelayedTransition(holder.fullCard, new AutoTransition());
+                            holder.expndView.setVisibility(View.VISIBLE);
+                            holder.chaptername.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.arrow_up, 0);
+                            model.setExpanded(!model.isExpanded());
+                        }
                     }
                 });
             }
@@ -117,14 +152,36 @@ public class SubjectPageActivity extends AppCompatActivity {
         super.onStop();
         adapter.stopListening();
     }
-}
 
-class MyChapterViewHolder extends RecyclerView.ViewHolder{
 
-    TextView chaptername;
+    class MyChapterViewHolder extends RecyclerView.ViewHolder {
 
-    public MyChapterViewHolder(@NonNull View itemView) {
-        super(itemView);
-        chaptername = itemView.findViewById(R.id.chaptername);
+        TextView chaptername, Videobtn, studyMatbtn, AssignmentBtn;
+        LinearLayout expndView;
+        RelativeLayout fullCard;
+
+        public MyChapterViewHolder(@NonNull View itemView) {
+            super(itemView);
+            chaptername = itemView.findViewById(R.id.chaptername);
+            expndView = itemView.findViewById(R.id.ExpandView);
+            fullCard = itemView.findViewById(R.id.fullCard);
+            Videobtn = itemView.findViewById(R.id.Videobtn);
+            studyMatbtn = itemView.findViewById(R.id.studyMatbtn);
+            AssignmentBtn = itemView.findViewById(R.id.AssignmentBtn);
+
+            AssignmentBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(), "Not Available Now", Toast.LENGTH_SHORT).show();
+                }
+            });
+            studyMatbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(), "Not Available Now", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
     }
 }

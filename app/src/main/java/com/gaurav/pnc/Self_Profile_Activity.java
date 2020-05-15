@@ -15,13 +15,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class Profile_Activity extends AppCompatActivity {
+public class Self_Profile_Activity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference rootref;
     private String currentuserid;
 
-    private EditText name, phone;
+    private EditText name, phone, design, member;
     private Button updatebutton;
 
     @Override
@@ -40,7 +40,7 @@ public class Profile_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 String user_name = name.getText().toString().trim();
                 rootref.child("Users").child(currentuserid).child("name").setValue(user_name);
-
+                finish();
             }
         });
     }
@@ -54,6 +54,8 @@ public class Profile_Activity extends AppCompatActivity {
                             User_info info = dataSnapshot.getValue(User_info.class);
                             name.setText(info.getName());
                             phone.setText(info.getPhone());
+                            design.setText(info.getDesignation());
+                            member.setText(info.getMembership());
                         }
                     }
                     @Override
@@ -65,6 +67,8 @@ public class Profile_Activity extends AppCompatActivity {
     private void initializefields() {
         name = findViewById(R.id.fullname);
         phone = findViewById(R.id.phone_ui);
+        design = findViewById(R.id.designation_edittext);
+        member = findViewById(R.id.membership_edittext);
         updatebutton = findViewById(R.id.update_button);
     }
 }

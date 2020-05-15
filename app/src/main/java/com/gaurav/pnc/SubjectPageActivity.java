@@ -74,7 +74,7 @@ public class SubjectPageActivity extends AppCompatActivity {
         final ProgressDialog loadingBar;
         loadingBar = new ProgressDialog(this);
         loadingBar.setCancelable(false);
-        loadingBar.setTitle("Loading....!");
+        loadingBar.setTitle("Loading...");
         loadingBar.setMessage("Please Wait");
         loadingBar.show();
 

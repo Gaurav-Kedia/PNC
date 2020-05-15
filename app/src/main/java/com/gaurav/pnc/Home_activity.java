@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class Home_activity extends AppCompatActivity {
 
@@ -48,7 +49,10 @@ public class Home_activity extends AppCompatActivity {
     private DatabaseReference course_list_ref;
     private Course_list_adapter adapter;
     private RecyclerView recycler;
+
     private String currentuserid;
+    private TextView header_name, header_phone;
+    private String currentname, currentphone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +72,7 @@ public class Home_activity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.home_option:
+                        drawerLayout.closeDrawers();
                         return true;
 
                     case R.id.assignments_option:
@@ -84,6 +89,11 @@ public class Home_activity extends AppCompatActivity {
                         SendUserToProfileActivity();
                         return true;
 
+                    case R.id.nav_support:
+                        return true;
+
+                    case R.id.nav_aboutus:
+                        return true;
                 }
                 return true;
             }
@@ -93,6 +103,8 @@ public class Home_activity extends AppCompatActivity {
     @Override
     protected void onStart() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        navigationView.getMenu().getItem(0).setChecked(true);
+        drawerLayout.closeDrawers();
         if (currentUser == null) {
             SendUserToLoginActivity();
         } else {
@@ -139,8 +151,8 @@ public class Home_activity extends AppCompatActivity {
         pb.setVisibility(View.VISIBLE);
 
         mHeader = navigationView.getHeaderView(0);
-        TextView header_name = mHeader.findViewById(R.id.header_user_name);
-        TextView header_phone = mHeader.findViewById(R.id.header_user_email);
+        header_name = mHeader.findViewById(R.id.header_user_name);
+        header_phone = mHeader.findViewById(R.id.header_user_email);
 
         mtoggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
         drawerLayout.addDrawerListener(mtoggle);
@@ -149,17 +161,16 @@ public class Home_activity extends AppCompatActivity {
     }
 
     private void verifyuserexistance() {
-        currentuserid = mAuth.getCurrentUser().getUid();
+        currentuserid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
         rootref.child("Users").child(currentuserid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child("name").exists()) {
-                    updateuserstatus("online");
+                    updateuserinfo();
                 } else {
                     SendUserToProfileActivity();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -168,7 +179,7 @@ public class Home_activity extends AppCompatActivity {
     }
 
     private void SendUserToProfileActivity() {
-        startActivity(new Intent(Home_activity.this, Profile_Activity.class));
+        startActivity(new Intent(Home_activity.this, Self_Profile_Activity.class));
     }
 
     private void SendUserToLoginActivity() {
@@ -180,24 +191,35 @@ public class Home_activity extends AppCompatActivity {
         startActivity(new Intent(Home_activity.this, Forum_activity.class));
     }
 
-    private void updateuserstatus(String state) {
+    private void updateuserinfo() {
         String savecurrenttime, savecurrentdate;
         Calendar calender = Calendar.getInstance();
-
         SimpleDateFormat currentdate = new SimpleDateFormat("MMM dd, yyyy");
         savecurrentdate = currentdate.format(calender.getTime());
-
         SimpleDateFormat currenttime = new SimpleDateFormat("hh:mm a");
         savecurrenttime = currenttime.format(calender.getTime());
-
         HashMap<String, Object> onlineStatemap = new HashMap<>();
         onlineStatemap.put("time", savecurrenttime);
         onlineStatemap.put("date", savecurrentdate);
-        onlineStatemap.put("state", state);
+        if (currentuserid != null) {
+            currentuserid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+            rootref.child("Users").child(currentuserid)
+                    .updateChildren(onlineStatemap);
+            rootref.child("Users").child(currentuserid).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    currentname = dataSnapshot.child("name").getValue().toString();
+                    currentphone = dataSnapshot.child("phone").getValue().toString();
+                    header_name.setText(currentname);
+                    header_phone.setText(currentphone);
+                }
 
-        currentuserid = mAuth.getCurrentUser().getUid();
-        rootref.child("Users").child(currentuserid)
-                .updateChildren(onlineStatemap);
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
 
     private void inflate_recycler_view() {

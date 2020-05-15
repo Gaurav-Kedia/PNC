@@ -33,7 +33,7 @@
             android:name=".Courses"
             android:parentActivityName=".Home_activity" />
         <activity
-            android:name=".Profile_Activity"
+            android:name=".Self_Profile_Activity"
             android:parentActivityName=".Home_activity" />
         <activity android:name=".login_activity" />
         <activity android:name=".Home_activity">

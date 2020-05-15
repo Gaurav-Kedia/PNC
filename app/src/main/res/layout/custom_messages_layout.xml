@@ -3,14 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/message_profile_image"
-        android:layout_width="51dp"
-        android:layout_height="51dp"
-        android:layout_margin="5dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/profile_image"></de.hdodenhof.circleimageview.CircleImageView>
-
     <TextView
         android:id="@+id/receiver_message_text"
         android:layout_width="wrap_content"
@@ -18,20 +10,22 @@
         android:layout_alignParentTop="true"
         android:layout_margin="5dp"
         android:layout_marginTop="11dp"
-        android:layout_toEndOf="@+id/message_profile_image"
+        android:layout_marginStart="37dp"
         android:background="@drawable/their_message"
         android:elevation="5dp"
         android:padding="11dp"
         android:text="receiver message"
         android:textColor="#CA9EFF"
         android:textSize="13dp"
-        android:textStyle="bold"></TextView>
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/message_sender_image_view"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_alignParentEnd="true"
+        android:background="@drawable/their_message"
+        android:padding="17dp"
         android:layout_margin="5dp"
         android:elevation="5dp"
         android:scaleType="centerCrop" />
@@ -41,8 +35,11 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="77dp"
-        android:layout_marginTop="13dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="11dp"
+        android:background="@drawable/their_message"
+        android:padding="17dp"
         android:elevation="5dp"
         android:scaleType="centerCrop" />
 
@@ -61,5 +58,5 @@
         android:text="sender message"
         android:textColor="#fff"
         android:textSize="13dp"
-        android:textStyle="bold"></TextView>
+        android:textStyle="bold" />
 </RelativeLayout>

@@ -21,7 +21,7 @@
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textSize="15sp"
-        android:textStyle="bold"></EditText>
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/verification_code_input"
@@ -41,7 +41,7 @@
         android:textAllCaps="false"
         android:textSize="15sp"
         android:textStyle="bold"
-        android:visibility="invisible"></EditText>
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/send_ver_code_button"
@@ -57,7 +57,7 @@
         android:textAllCaps="false"
         android:textColor="@android:color/background_light"
         android:textSize="19sp"
-        android:textStyle="bold"></Button>
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/verify_button"
@@ -74,6 +74,5 @@
         android:textColor="@android:color/background_light"
         android:textSize="19sp"
         android:textStyle="bold"
-        android:visibility="invisible"></Button>
-
+        android:visibility="invisible" />
 </RelativeLayout>

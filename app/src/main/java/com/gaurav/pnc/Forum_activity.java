@@ -23,7 +23,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -89,9 +88,9 @@ public class Forum_activity extends AppCompatActivity {
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.exists()) {
                                     final String retname = dataSnapshot.child("name").getValue().toString();
-                                    final String retstatus = dataSnapshot.child("status").getValue().toString();
+                                    final String retinfo = dataSnapshot.child("info").getValue().toString();
                                     holder.username.setText(retname);
-                                    holder.userstatus.setText(retstatus);
+                                    holder.userinfo.setText(retinfo);
                                     loadingbar.dismiss();
 
                                     holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -128,14 +127,12 @@ public class Forum_activity extends AppCompatActivity {
 
     public static class ChatsViewHolder extends RecyclerView.ViewHolder {
 
-        CircleImageView profileimage;
-        TextView username, userstatus;
+        TextView username, userinfo;
 
         public ChatsViewHolder(@NonNull View itemView) {
             super(itemView);
             username = itemView.findViewById(R.id.user_profile_name);
-            userstatus = itemView.findViewById(R.id.user_status);
-            profileimage = itemView.findViewById(R.id.user_profile_image);
+            userinfo = itemView.findViewById(R.id.user_info);
         }
     }
 }

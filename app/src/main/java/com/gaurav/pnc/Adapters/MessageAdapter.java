@@ -4,8 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +28,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewholder> {
     private List<Messages> userMessagesList;
@@ -83,7 +81,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                 messageViewholder.receiverMessageText.setBackgroundResource(R.drawable.their_message);
                 messageViewholder.receiverMessageText.setText(messages.getMessage() + "\n" + messages.getTime() + " - " + messages.getDate());
             }
-        } else if (fromMessageType.equals("image")) {
+        }
+        else if (fromMessageType.equals("image")) {
             if (fromuserid.equals(messageSenderId)) {
                 messageViewholder.messagesenderpicture.setVisibility(View.VISIBLE);
                 Picasso.get().load(messages.getMessage()).into(messageViewholder.messagesenderpicture);
@@ -92,7 +91,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                 messageViewholder.messagereceiverpicture.setVisibility(View.VISIBLE);
                 Picasso.get().load(messages.getMessage()).into(messageViewholder.messagereceiverpicture);
             }
-        } else if (fromMessageType.equals("pdf") || fromMessageType.equals("docx")) {
+        }
+        else if (fromMessageType.equals("pdf") || fromMessageType.equals("docx")) {
             if (fromuserid.equals(messageSenderId)) {
                 messageViewholder.messagesenderpicture.setVisibility(View.VISIBLE);
                 Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/chatapp-10276.appspot.com/o/Image%20files%2Ffile.png?alt=media&token=fb090da2-a1cb-41c9-b19d-d03d1f30105d")

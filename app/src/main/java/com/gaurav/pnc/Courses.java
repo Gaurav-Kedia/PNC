@@ -2,39 +2,29 @@ package com.gaurav.pnc;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.database.SnapshotParser;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.zip.Inflater;
 
 public class Courses extends AppCompatActivity {
 
@@ -50,16 +40,12 @@ public class Courses extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_courses);
-
         cname = findViewById(R.id.cname);
         subjects = findViewById(R.id.subjects);
 
         rootref = FirebaseDatabase.getInstance().getReference();
-
         cource = getIntent().getStringExtra("Course");
-
         courseref = rootref.child("Cources").child(cource);
-
         cname.setText(cource);
 
         DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();

@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".VideoList"
+            android:theme="@style/Theme.Design.NoActionBar"
             android:parentActivityName=".SubjectPageActivity"
             ></activity>
         <activity android:name=".SubjectPageActivity"

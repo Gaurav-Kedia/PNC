@@ -7,14 +7,30 @@
     tools:context=".VideoList"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/fullTitle"
+<!--    <TextView-->
+<!--        android:id="@+id/fullTitle"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Hello"-->
+<!--        android:textColor="#000"-->
+<!--        android:textSize="30sp"-->
+<!--        />-->
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello"
-        android:gravity="center"
-        android:textColor="#000"
-        android:textSize="30sp"
-        />
+        android:orientation="vertical" >
+
+        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+            android:id="@+id/youtube_player_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:videoId="NHAIiAmxTAU"
+            app:showVideoDuration="true"
+            app:autoPlay="true"
+            app:showYouTubeButton="false"
+            app:showFullScreenButton="true" />
+
+    </LinearLayout>
 
 </LinearLayout>

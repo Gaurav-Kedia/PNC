@@ -3,14 +3,17 @@ package com.gaurav.pnc;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Handler;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.gaurav.pnc.Models.User_info;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -18,7 +21,16 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class login_activity extends AppCompatActivity {
@@ -30,6 +42,10 @@ public class login_activity extends AppCompatActivity {
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private FirebaseAuth mAuth;
     private ProgressDialog loadingBar;
+    private String phoneNumber;
+
+    private DatabaseReference user_ref;
+    private List<String> fac;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +53,12 @@ public class login_activity extends AppCompatActivity {
         setContentView(R.layout.login_activity);
         mAuth = FirebaseAuth.getInstance();
         initialise();
+
         loadingBar = new ProgressDialog(this);
         sendverificationbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phoneNumber = inputphonenumber.getText().toString();
+                phoneNumber = inputphonenumber.getText().toString();
                 if (TextUtils.isEmpty(phoneNumber)) {
                     Toast.makeText(login_activity.this, "Enter valid number", Toast.LENGTH_SHORT).show();
                 } else {
@@ -79,7 +96,6 @@ public class login_activity extends AppCompatActivity {
                                    @NonNull PhoneAuthProvider.ForceResendingToken token) {
                 mVerificationId = verificationId;
                 mResendToken = token;
-
                 loadingBar.dismiss();
                 sendverificationbutton.setVisibility(View.INVISIBLE);
                 inputphonenumber.setVisibility(View.INVISIBLE);
@@ -119,15 +135,15 @@ public class login_activity extends AppCompatActivity {
     }
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+        final String[] check = new String[1];
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            loadingBar.dismiss();
-                            Toast.makeText(login_activity.this, "logged in success", Toast.LENGTH_SHORT).show();
                             SendUserToMMainActivity();
                         } else {
+                            loadingBar.dismiss();
                             String msg = task.getException().toString();
                             Toast.makeText(login_activity.this, msg, Toast.LENGTH_SHORT).show();
                         }
@@ -136,8 +152,62 @@ public class login_activity extends AppCompatActivity {
     }
 
     private void SendUserToMMainActivity() {
-        Intent mainactivity = new Intent(login_activity.this, Home_activity.class);
-        startActivity(mainactivity);
-        finish();
+        check_for_user();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (check_phone()) {
+                    Intent mainactivity = new Intent(login_activity.this, Home_activity.class);
+                    startActivity(mainactivity);
+                    loadingBar.dismiss();
+                } else {
+                    loadingBar.dismiss();
+                    DatabaseReference rootref = FirebaseDatabase.getInstance().getReference();
+                    String currentuserid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+                    HashMap<String, Object> onlineStatemap = new HashMap<>();
+                    onlineStatemap.put("phone", phoneNumber);
+                    onlineStatemap.put("membership", "demo");
+                    onlineStatemap.put("designation", "student");
+                    onlineStatemap.put("info", "null_student");
+                    rootref.child("Users").child(currentuserid)
+                            .updateChildren(onlineStatemap);
+                    finish();
+                    Intent mainactivity = new Intent(login_activity.this, Home_activity.class);
+                    startActivity(mainactivity);
+                }
+            }
+        }, 5000);
+    }
+
+    private void check_for_user() {
+        fac = new ArrayList<>();
+        user_ref = FirebaseDatabase.getInstance().getReference("Users");
+        user_ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snap : dataSnapshot.getChildren()) {
+                    User_info p = snap.getValue(User_info.class);
+                    User_info f = new User_info();
+                    String phone = p.getPhone();
+                    f.setPhone(phone);
+                    Log.i("list_phone_numbers", phone);
+                    fac.add(phone);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private boolean check_phone() {
+        for (String snap : fac) {
+            if (snap.equalsIgnoreCase(phoneNumber)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

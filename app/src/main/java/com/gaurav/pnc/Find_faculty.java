@@ -28,6 +28,7 @@ public class Find_faculty extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_faculty);
+
         getSupportActionBar().setTitle("Find Faculty");
 
         FindFriendRecyclerList = findViewById(R.id.find_friend_recyclerlist);

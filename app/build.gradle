@@ -45,4 +45,7 @@ dependencies {
 //    implementation 'com.google.android.exoplayer:exoplayer:2.7.2'
 //    implementation 'com.github.HaarigerHarald:android-youtubeExtractor:master-SNAPSHOT'
 //    compile 'com.github.khizar1556.MKVideoPlayer:mkvideoplayer:0.1.5'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:percent:22.2.0'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.17'
 }

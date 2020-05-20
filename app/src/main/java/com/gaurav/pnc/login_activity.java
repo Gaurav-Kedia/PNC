@@ -84,11 +84,12 @@ public class login_activity extends AppCompatActivity {
             @Override
             public void onVerificationFailed(FirebaseException e) {
                 loadingBar.dismiss();
+                Log.d("Error",e.getMessage());
                 Toast.makeText(login_activity.this, "Invalid, please enter phone number with country code", Toast.LENGTH_SHORT).show();
                 sendverificationbutton.setVisibility(View.VISIBLE);
                 inputphonenumber.setVisibility(View.VISIBLE);
-                verifybutton.setVisibility(View.INVISIBLE);
-                inputverificationcode.setVisibility(View.INVISIBLE);
+                verifybutton.setVisibility(View.GONE);
+                inputverificationcode.setVisibility(View.GONE);
             }
 
             @Override
@@ -97,8 +98,8 @@ public class login_activity extends AppCompatActivity {
                 mVerificationId = verificationId;
                 mResendToken = token;
                 loadingBar.dismiss();
-                sendverificationbutton.setVisibility(View.INVISIBLE);
-                inputphonenumber.setVisibility(View.INVISIBLE);
+                sendverificationbutton.setVisibility(View.GONE);
+                inputphonenumber.setVisibility(View.GONE);
                 verifybutton.setVisibility(View.VISIBLE);
                 inputverificationcode.setVisibility(View.VISIBLE);
             }
@@ -107,8 +108,8 @@ public class login_activity extends AppCompatActivity {
         verifybutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendverificationbutton.setVisibility(View.INVISIBLE);
-                inputphonenumber.setVisibility(View.INVISIBLE);
+                sendverificationbutton.setVisibility(View.GONE);
+                inputphonenumber.setVisibility(View.GONE);
 
                 String verificationcode = inputverificationcode.getText().toString();
                 if (TextUtils.isEmpty(verificationcode)) {

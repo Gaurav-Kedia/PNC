@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#08326C</color>
-    <color name="colorPrimaryDark">#072E63</color>
+    <color name="colorPrimary">#253A4B</color>
+    <color name="colorPrimaryDark">#253A4B</color>
     <color name="colorAccent">#01579B</color>
 
     <color name="_bg__loginactivity_ek2_color">#ffffff</color>

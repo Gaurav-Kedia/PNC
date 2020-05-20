@@ -2,6 +2,6 @@
 <!-- _bg__loginactivity from your PSD file. -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
 	android:shape="rectangle" >
-	<solid android:color="@color/_bg__loginactivity_color" />
+<!--	<solid android:color="@color/_bg__loginactivity_color" />-->
 </shape>
 

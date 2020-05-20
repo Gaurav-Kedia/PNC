@@ -16,7 +16,7 @@
             android:parentActivityName=".SubjectPageActivity"
             ></activity>
         <activity android:name=".SubjectPageActivity"
-            android:parentActivityName="Courses"  />
+            android:parentActivityName=".Courses"  />
         <activity
             android:name=".ChatActivity"
             android:parentActivityName=".Forum_activity" />
@@ -36,7 +36,8 @@
         <activity
             android:name=".Self_Profile_Activity"
             android:parentActivityName=".Home_activity" />
-        <activity android:name=".login_activity" />
+        <activity android:name=".login_activity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity android:name=".Home_activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

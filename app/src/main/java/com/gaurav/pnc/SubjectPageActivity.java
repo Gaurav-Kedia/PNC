@@ -30,7 +30,7 @@ import com.google.firebase.database.Query;
 
 public class SubjectPageActivity extends AppCompatActivity {
 
-    private TextView cname, sname;
+//    private TextView cname, sname;
     private String Course,subject;
     RecyclerView chapterlist;
     private DatabaseReference rootref;
@@ -43,26 +43,21 @@ public class SubjectPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subject_page);
 
-        cname = findViewById(R.id.courcename);
-        sname = findViewById(R.id.sname);
+//        cname = findViewById(R.id.courcename);
+//        sname = findViewById(R.id.sname);
         chapterlist = findViewById(R.id.chapterlist);
         chapterlist.setLayoutManager(new LinearLayoutManager(this));
 
         Course = getIntent().getStringExtra("cource");
         subject = getIntent().getStringExtra("sujectName");
-        cname.setText(getIntent().getStringExtra("cource"));
-        sname.setText(getIntent().getStringExtra("sujectName"));
+//        cname.setText(getIntent().getStringExtra("cource"));
+//        sname.setText(getIntent().getStringExtra("sujectName"));
 
         rootref = FirebaseDatabase.getInstance().getReference();
         chapteref = rootref.child("Cources").child(Course).child(getIntent().getStringExtra("sujectName")).child("Chapters");
 
-        cname.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-                onBackPressed();
-            }
-        });
+        getSupportActionBar().setTitle(getIntent().getStringExtra("sujectName"));
+
         loadChapterList();
     }
 

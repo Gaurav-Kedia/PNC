@@ -82,7 +82,7 @@ public class SubjectPageActivity extends AppCompatActivity {
                             @Override
                             public Chapter parseSnapshot(DataSnapshot snapshot) {
                                 loadingBar.dismiss();
-                                return new Chapter(snapshot.getKey() + " . " + snapshot.child("name").getValue().toString());
+                                return new Chapter(snapshot.child("name").getValue().toString(),Integer.parseInt(snapshot.getKey()) );
                             }
 
                         })
@@ -98,7 +98,7 @@ public class SubjectPageActivity extends AppCompatActivity {
 
             @Override
             protected void onBindViewHolder(@NonNull final MyChapterViewHolder holder, final int position, @NonNull final Chapter model) {
-                holder.chaptername.setText(model.getName());
+                holder.chaptername.setText(model.getSlno()+"."+model.getName());
                 holder.chaptername.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -111,6 +111,7 @@ public class SubjectPageActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent i = new Intent(getApplicationContext(), VideoList.class);
                         i.putExtra("cource",Course);
+                        i.putExtra("code", (model.getSlno())+"");
                         i.putExtra("sujectName",subject);
                         i.putExtra("Chapter",model.getName());
                         startActivity(i);
@@ -179,6 +180,5 @@ public class SubjectPageActivity extends AppCompatActivity {
                 }
             });
         }
-
     }
 }

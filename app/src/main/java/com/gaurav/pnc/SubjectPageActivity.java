@@ -30,7 +30,7 @@ import com.google.firebase.database.Query;
 
 public class SubjectPageActivity extends AppCompatActivity {
 
-    private TextView cname, sname;
+//    private TextView cname, sname;
     private String Course,subject;
     RecyclerView chapterlist;
     private DatabaseReference rootref;
@@ -43,26 +43,21 @@ public class SubjectPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subject_page);
 
-        cname = findViewById(R.id.courcename);
-        sname = findViewById(R.id.sname);
+//        cname = findViewById(R.id.courcename);
+//        sname = findViewById(R.id.sname);
         chapterlist = findViewById(R.id.chapterlist);
         chapterlist.setLayoutManager(new LinearLayoutManager(this));
 
         Course = getIntent().getStringExtra("cource");
         subject = getIntent().getStringExtra("sujectName");
-        cname.setText(getIntent().getStringExtra("cource"));
-        sname.setText(getIntent().getStringExtra("sujectName"));
+//        cname.setText(getIntent().getStringExtra("cource"));
+//        sname.setText(getIntent().getStringExtra("sujectName"));
 
         rootref = FirebaseDatabase.getInstance().getReference();
         chapteref = rootref.child("Cources").child(Course).child(getIntent().getStringExtra("sujectName")).child("Chapters");
 
-        cname.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-                onBackPressed();
-            }
-        });
+        getSupportActionBar().setTitle(getIntent().getStringExtra("sujectName"));
+
         loadChapterList();
     }
 
@@ -82,7 +77,7 @@ public class SubjectPageActivity extends AppCompatActivity {
                             @Override
                             public Chapter parseSnapshot(DataSnapshot snapshot) {
                                 loadingBar.dismiss();
-                                return new Chapter(snapshot.getKey() + " . " + snapshot.child("name").getValue().toString());
+                                return new Chapter(snapshot.child("name").getValue().toString(),Integer.parseInt(snapshot.getKey()) );
                             }
 
                         })
@@ -98,7 +93,7 @@ public class SubjectPageActivity extends AppCompatActivity {
 
             @Override
             protected void onBindViewHolder(@NonNull final MyChapterViewHolder holder, final int position, @NonNull final Chapter model) {
-                holder.chaptername.setText(model.getName());
+                holder.chaptername.setText(model.getSlno()+"."+model.getName());
                 holder.chaptername.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -111,6 +106,7 @@ public class SubjectPageActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent i = new Intent(getApplicationContext(), VideoList.class);
                         i.putExtra("cource",Course);
+                        i.putExtra("code", (model.getSlno())+"");
                         i.putExtra("sujectName",subject);
                         i.putExtra("Chapter",model.getName());
                         startActivity(i);
@@ -179,6 +175,5 @@ public class SubjectPageActivity extends AppCompatActivity {
                 }
             });
         }
-
     }
 }

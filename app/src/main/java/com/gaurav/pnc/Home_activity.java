@@ -9,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.Menu;
@@ -64,7 +65,8 @@ public class Home_activity extends AppCompatActivity {
         rootref = FirebaseDatabase.getInstance().getReference();
 
         recycler.setHasFixedSize(true);
-        recycler.setLayoutManager(new LinearLayoutManager(this));
+//        recycler.setLayoutManager(new LinearLayoutManager(this));
+        recycler.setLayoutManager(new GridLayoutManager(this,2));
         inflate_recycler_view();
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -98,6 +100,7 @@ public class Home_activity extends AppCompatActivity {
                 return true;
             }
         });
+
     }
 
     @Override
@@ -133,9 +136,14 @@ public class Home_activity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.logout, menu);
+        getMenuInflater().inflate(R.menu.profile, menu);
         return super.onCreateOptionsMenu(menu);
     }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.logout, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
 
     public void initialise() {
         recycler = findViewById(R.id.course_list_recycler_view);

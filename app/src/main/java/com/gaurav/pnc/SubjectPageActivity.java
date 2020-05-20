@@ -111,7 +111,7 @@ public class SubjectPageActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent i = new Intent(getApplicationContext(), VideoList.class);
                         i.putExtra("cource",Course);
-                        i.putExtra("code",model.getSlno());
+                        i.putExtra("code", (model.getSlno())+"");
                         i.putExtra("sujectName",subject);
                         i.putExtra("Chapter",model.getName());
                         startActivity(i);

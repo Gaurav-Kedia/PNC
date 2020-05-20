@@ -4,35 +4,31 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    app:cardBackgroundColor="#142850"
-    app:cardCornerRadius="15dp"
-    android:id="@+id/card"
+    app:cardBackgroundColor="#fff"
+    app:cardCornerRadius="9dp"
     app:cardElevation="5dp"
     app:contentPadding="5dp">
 
     <RelativeLayout
-        android:gravity="center"
         android:id="@+id/list_layout"
         android:layout_width="match_parent"
-        android:layout_height="105dp"
+        android:layout_height="wrap_content"
         android:padding="5dp">
 
         <LinearLayout
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="5dp">
 
             <TextView
-                android:drawableTop="@drawable/ic_book"
                 android:id="@+id/course_head"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
                 android:padding="5dp"
                 android:text="Default title:"
-                android:textColor="#fff"
+                android:textColor="#424242"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </LinearLayout>

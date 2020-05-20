@@ -4,8 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
@@ -13,11 +18,13 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerFullScreenListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
+import static android.provider.MediaStore.Video.Thumbnails.VIDEO_ID;
+
 public class VideoList extends AppCompatActivity {
 
     private TextView fullTitle ;
     private String CourseName,subject,chapter;
-    YouTubePlayerView youTubePlayerView;
+private Button play;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,20 +34,19 @@ public class VideoList extends AppCompatActivity {
         CourseName = getIntent().getStringExtra("cource");
         subject = getIntent().getStringExtra("sujectName");
         chapter = getIntent().getStringExtra("Chapter");
-//        fullTitle = findViewById(R.id.fullTitle);
 
-//        fullTitle.setText("Display the video list of "+CourseName+", "+subject+", "+chapter);
+        fullTitle = findViewById(R.id.fullTitle);
 
-        youTubePlayerView = findViewById(R.id.youtube_player_view);
-        getLifecycle().addObserver(youTubePlayerView);
+        fullTitle.setText("Display the video list of "+CourseName+", "+subject+", "+chapter);
 
-        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        play = findViewById(R.id.play);
+        play.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                String videoId = "NHAIiAmxTAU";
-                youTubePlayer.loadVideo(videoId, 1f);
-                addFullScreenListenerToPlayer();
-
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),PlayVideo.class);
+                startActivity(i);
             }
         });
 
@@ -48,25 +54,6 @@ public class VideoList extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (youTubePlayerView.isFullScreen())
-            youTubePlayerView.exitFullScreen();
-        else
-            super.onBackPressed();
+        super.onBackPressed();
     }
-
-    private void addFullScreenListenerToPlayer() {
-        youTubePlayerView.addFullScreenListener(new YouTubePlayerFullScreenListener() {
-            @SuppressLint("SourceLockedOrientationActivity")
-            @Override
-            public void onYouTubePlayerEnterFullScreen() {
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
-            }
-
-            @SuppressLint("SourceLockedOrientationActivity")
-            @Override
-            public void onYouTubePlayerExitFullScreen() {
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            }
-        });
-    }}
+}

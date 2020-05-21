@@ -98,6 +98,12 @@ public class Home_activity extends AppCompatActivity {
 
                     case R.id.nav_aboutus:
                         return true;
+
+                    case R.id.logout:
+                        mAuth.signOut();
+                        SendUserToLoginActivity();
+                        finish();
+                        return true;
                 }
                 return true;
             }

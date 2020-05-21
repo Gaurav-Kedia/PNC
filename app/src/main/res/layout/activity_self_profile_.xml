@@ -91,7 +91,8 @@
 
                 <EditText
                     android:id="@+id/designation_edittext"
-                    android:layout_width="320dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:editable="false"
                     android:hint="to be assigned by admin"
@@ -119,7 +120,8 @@
 
                 <EditText
                     android:id="@+id/membership_edittext"
-                    android:layout_width="320dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:editable="false"
                     android:textColor="#08326C"

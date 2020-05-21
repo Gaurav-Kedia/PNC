@@ -2,6 +2,7 @@ package com.gaurav.pnc;
 
 import android.content.Intent;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,6 +12,18 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+=======
+import androidx.annotation.NonNull;
+import com.google.android.material.navigation.NavigationView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+>>>>>>> androidX
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class Home_activity extends AppCompatActivity {
 
@@ -49,6 +63,8 @@ public class Home_activity extends AppCompatActivity {
     private Course_list_adapter adapter;
     private RecyclerView recycler;
     private String currentuserid;
+    private TextView header_name, header_phone;
+    private String currentname, currentphone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +76,12 @@ public class Home_activity extends AppCompatActivity {
         rootref = FirebaseDatabase.getInstance().getReference();
 
         recycler.setHasFixedSize(true);
+<<<<<<< HEAD
         recycler.setLayoutManager(new LinearLayoutManager(this));
+=======
+//        recycler.setLayoutManager(new LinearLayoutManager(this));
+        recycler.setLayoutManager(new GridLayoutManager(this,2));
+>>>>>>> androidX
         inflate_recycler_view();
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -68,6 +89,7 @@ public class Home_activity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.home_option:
+                        drawerLayout.closeDrawers();
                         return true;
 
                     case R.id.assignments_option:
@@ -84,15 +106,26 @@ public class Home_activity extends AppCompatActivity {
                         SendUserToProfileActivity();
                         return true;
 
+                    case R.id.nav_support:
+                        return true;
+
+                    case R.id.nav_aboutus:
+                        return true;
                 }
                 return true;
             }
         });
+
     }
 
     @Override
     protected void onStart() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
+<<<<<<< HEAD
+=======
+        navigationView.getMenu().getItem(0).setChecked(true);
+        drawerLayout.closeDrawers();
+>>>>>>> androidX
         if (currentUser == null) {
             SendUserToLoginActivity();
         } else {
@@ -121,9 +154,14 @@ public class Home_activity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.logout, menu);
+        getMenuInflater().inflate(R.menu.profile, menu);
         return super.onCreateOptionsMenu(menu);
     }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.logout, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
 
     public void initialise() {
         recycler = findViewById(R.id.course_list_recycler_view);
@@ -139,8 +177,8 @@ public class Home_activity extends AppCompatActivity {
         pb.setVisibility(View.VISIBLE);
 
         mHeader = navigationView.getHeaderView(0);
-        TextView header_name = mHeader.findViewById(R.id.header_user_name);
-        TextView header_phone = mHeader.findViewById(R.id.header_user_email);
+        header_name = mHeader.findViewById(R.id.header_user_name);
+        header_phone = mHeader.findViewById(R.id.header_user_email);
 
         mtoggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
         drawerLayout.addDrawerListener(mtoggle);
@@ -149,17 +187,24 @@ public class Home_activity extends AppCompatActivity {
     }
 
     private void verifyuserexistance() {
+<<<<<<< HEAD
         currentuserid = mAuth.getCurrentUser().getUid();
+=======
+        currentuserid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+>>>>>>> androidX
         rootref.child("Users").child(currentuserid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child("name").exists()) {
+<<<<<<< HEAD
                     updateuserstatus("online");
+=======
+                    updateuserinfo();
+>>>>>>> androidX
                 } else {
                     SendUserToProfileActivity();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -168,7 +213,11 @@ public class Home_activity extends AppCompatActivity {
     }
 
     private void SendUserToProfileActivity() {
+<<<<<<< HEAD
         startActivity(new Intent(Home_activity.this, Profile_Activity.class));
+=======
+        startActivity(new Intent(Home_activity.this, Self_Profile_Activity.class));
+>>>>>>> androidX
     }
 
     private void SendUserToLoginActivity() {
@@ -180,24 +229,58 @@ public class Home_activity extends AppCompatActivity {
         startActivity(new Intent(Home_activity.this, Forum_activity.class));
     }
 
-    private void updateuserstatus(String state) {
+    private void updateuserinfo() {
         String savecurrenttime, savecurrentdate;
         Calendar calender = Calendar.getInstance();
-
         SimpleDateFormat currentdate = new SimpleDateFormat("MMM dd, yyyy");
         savecurrentdate = currentdate.format(calender.getTime());
-
         SimpleDateFormat currenttime = new SimpleDateFormat("hh:mm a");
         savecurrenttime = currenttime.format(calender.getTime());
-
         HashMap<String, Object> onlineStatemap = new HashMap<>();
         onlineStatemap.put("time", savecurrenttime);
         onlineStatemap.put("date", savecurrentdate);
-        onlineStatemap.put("state", state);
+        if (currentuserid != null) {
+            currentuserid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+            rootref.child("Users").child(currentuserid)
+                    .updateChildren(onlineStatemap);
+            rootref.child("Users").child(currentuserid).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    currentname = dataSnapshot.child("name").getValue().toString();
+                    currentphone = dataSnapshot.child("phone").getValue().toString();
+                    header_name.setText(currentname);
+                    header_phone.setText(currentphone);
+                }
 
-        currentuserid = mAuth.getCurrentUser().getUid();
-        rootref.child("Users").child(currentuserid)
-                .updateChildren(onlineStatemap);
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+    }
+
+    private void inflate_recycler_view() {
+        course_list_ref = FirebaseDatabase.getInstance().getReference("Cources");
+        course_list_ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snap : dataSnapshot.getChildren()) {
+                    String name = snap.getKey();
+                    Course_list_model crs = new Course_list_model();
+                    crs.setCourse(name);
+                    courselist.add(crs);
+                }
+                pb.setVisibility(View.INVISIBLE);
+                adapter = new Course_list_adapter(Home_activity.this, courselist);
+                recycler.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void inflate_recycler_view() {

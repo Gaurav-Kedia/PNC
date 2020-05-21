@@ -1,12 +1,19 @@
 package com.gaurav.pnc;
 
 import android.app.ProgressDialog;
+<<<<<<< HEAD
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+=======
+import android.content.Intent;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+>>>>>>> androidX
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -26,12 +32,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 
+=======
+>>>>>>> androidX
 public class Courses extends AppCompatActivity {
 
     private String cource ;
-    private TextView cname;
+//    private TextView cname;
     public RecyclerView subjects;
     private DatabaseReference rootref;
     private DatabaseReference courseref;
@@ -42,16 +51,13 @@ public class Courses extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_courses);
-
-        cname = findViewById(R.id.cname);
+//        cname = findViewById(R.id.cname);
         subjects = findViewById(R.id.subjects);
 
         rootref = FirebaseDatabase.getInstance().getReference();
-
         cource = getIntent().getStringExtra("Course");
         courseref = rootref.child("Cources").child(cource);
-
-        cname.setText(cource);
+//        cname.setText(cource);
 
         DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
@@ -59,11 +65,16 @@ public class Courses extends AppCompatActivity {
 
         subjects.setLayoutManager(new GridLayoutManager(this, (int) (dpWidth/180)));
 
+        getSupportActionBar().setTitle(cource);
         loadSubjects();
     }
 
     public void loadSubjects(){
+<<<<<<< HEAD
         ProgressDialog loadingBar;
+=======
+        final ProgressDialog loadingBar;
+>>>>>>> androidX
         loadingBar = new ProgressDialog(this);
         loadingBar.setCancelable(false);
         loadingBar.setTitle("Loading....!");
@@ -77,8 +88,10 @@ public class Courses extends AppCompatActivity {
                             @Override
                             public Subject parseSnapshot(DataSnapshot snapshot) {
                                 Log.d("My Snap :",snapshot.toString());
+                                loadingBar.dismiss();
                                 return new Subject(snapshot.getKey(),snapshot.child("img").getValue().toString());
                             }
+
                         })
                         .build();
 
@@ -100,7 +113,10 @@ public class Courses extends AppCompatActivity {
                 holder.subject_card.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getApplicationContext(),"Course : "+cource+" Subject :"+model.getName(),Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(getApplicationContext(),SubjectPageActivity.class);
+                        i.putExtra("cource",cource);
+                        i.putExtra("sujectName",model.getName());
+                        startActivity(i);
                     }
                 });
 
@@ -108,7 +124,7 @@ public class Courses extends AppCompatActivity {
         };
 
         subjects.setAdapter(adapter);
-        loadingBar.dismiss();
+
 
     }
 

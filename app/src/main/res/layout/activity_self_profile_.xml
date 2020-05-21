@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Profile_Activity">
+    tools:context=".Self_Profile_Activity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -66,17 +66,51 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:editable="false"
+<<<<<<< HEAD:app/src/main/res/layout/activity_self_profile_.xml
                         android:hint="phone number"
                         android:maxLines="1"
+=======
+>>>>>>> androidX:app/src/main/res/layout/activity_profile_.xml
                         android:singleLine="true"
+                        android:hint="phone number"
+                        android:maxLines="1"
                         android:textColor="#08326C" />
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/roll_linear"
+                android:id="@+id/designation_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:background="@drawable/email_lock"
+                android:paddingBottom="9dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Designation: "
+                    android:textSize="19dp" />
+
+                <EditText
+                    android:id="@+id/designation_edittext"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:hint="to be assigned by admin"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="#08326C" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/membership_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/email_lock"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
                 android:paddingBottom="9dp">
@@ -85,13 +119,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="Roll: "
+                    android:text="Membersip: "
                     android:textSize="19dp" />
 
                 <EditText
-                    android:id="@+id/rollnum"
+                    android:id="@+id/membership_edittext"
                     android:layout_width="320dp"
                     android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:textColor="#08326C"
                     android:hint="to be assigned by admin"
                     android:inputType="number"
                     android:maxLines="1"

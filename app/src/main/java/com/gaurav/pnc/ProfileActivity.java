@@ -1,7 +1,12 @@
 package com.gaurav.pnc;
 
+<<<<<<< HEAD
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+=======
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+>>>>>>> androidX
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +27,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileActivity extends AppCompatActivity {
     private String receiveruserid, Current_state, sender_user_id;
     private CircleImageView userProfileimage;
+<<<<<<< HEAD
     private TextView userProfilename, userprofilestatus;
+=======
+    private TextView userProfilename, userprofileinfo;
+>>>>>>> androidX
     private Button sendmessagerequestbutton, declinechatrequest;
     private FirebaseAuth mAuth;
     private DatabaseReference userref, contactref;
@@ -39,7 +48,11 @@ public class ProfileActivity extends AppCompatActivity {
         receiveruserid = getIntent().getExtras().get("visit_user_id").toString();
         userProfileimage = findViewById(R.id.visit_profile_image);
         userProfilename = findViewById(R.id.visit_user_name);
+<<<<<<< HEAD
         userprofilestatus = findViewById(R.id.visit_profile_status);
+=======
+        userprofileinfo = findViewById(R.id.visit_profile_info);
+>>>>>>> androidX
         sendmessagerequestbutton = findViewById(R.id.send_message_request_button);
         declinechatrequest = findViewById(R.id.decline_message_request_button);
         Current_state = "new";
@@ -53,6 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
                 if (dataSnapshot.exists() && (dataSnapshot.hasChild("image"))) {
                     String userimage = dataSnapshot.child("image").getValue().toString();
                     String username = dataSnapshot.child("name").getValue().toString();
+<<<<<<< HEAD
                     String userstatus = dataSnapshot.child("status").getValue().toString();
 
                     Picasso.get().load(userimage).placeholder(R.drawable.profile_image).into(userProfileimage);
@@ -65,6 +79,20 @@ public class ProfileActivity extends AppCompatActivity {
 
                     userProfilename.setText(username);
                     userprofilestatus.setText(userstatus);
+=======
+                    String userinfo = dataSnapshot.child("info").getValue().toString();
+
+                    Picasso.get().load(userimage).placeholder(R.drawable.profile_image).into(userProfileimage);
+                    userProfilename.setText(username);
+                    userprofileinfo.setText(userinfo);
+                    managechatrequest();
+                } else {
+                    String username = dataSnapshot.child("name").getValue().toString();
+                    String userinfo = dataSnapshot.child("info").getValue().toString();
+
+                    userProfilename.setText(username);
+                    userprofileinfo.setText(userinfo);
+>>>>>>> androidX
                     managechatrequest();
                 }
             }

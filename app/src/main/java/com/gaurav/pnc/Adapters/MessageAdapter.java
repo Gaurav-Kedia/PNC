@@ -4,8 +4,13 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+<<<<<<< HEAD
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+=======
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+>>>>>>> androidX
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +34,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+<<<<<<< HEAD
 import de.hdodenhof.circleimageview.CircleImageView;
 
+=======
+>>>>>>> androidX
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewholder> {
     private List<Messages> userMessagesList;
     private FirebaseAuth mAuth;
@@ -53,7 +61,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     public void onBindViewHolder(@NonNull final MessageViewholder messageViewholder, final int position) {
         String messageSenderId = mAuth.getCurrentUser().getUid();
         final Messages messages = userMessagesList.get(position);
+<<<<<<< HEAD
 
+=======
+>>>>>>> androidX
         String fromuserid = messages.getFrom();
         String fromMessageType = messages.getType();
 
@@ -63,6 +74,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("image")) {
                     String receiverimage = dataSnapshot.child("image").getValue().toString();
+<<<<<<< HEAD
                     Picasso.get().load(receiverimage).placeholder(R.drawable.profile_image).into(messageViewholder.receiverProfileImage);
                 }
             }
@@ -76,6 +88,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         messageViewholder.receiverProfileImage.setVisibility(View.GONE);
         messageViewholder.senderMessageText.setVisibility(View.GONE);
 
+=======
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+        messageViewholder.receiverMessageText.setVisibility(View.GONE);
+        messageViewholder.senderMessageText.setVisibility(View.GONE);
+>>>>>>> androidX
         messageViewholder.messagesenderpicture.setVisibility(View.GONE);
         messageViewholder.messagereceiverpicture.setVisibility(View.GONE);
 
@@ -85,27 +107,47 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                 messageViewholder.senderMessageText.setBackgroundResource(R.drawable.my_message);
                 messageViewholder.senderMessageText.setText(messages.getMessage() + "\n" + messages.getTime() + " - " + messages.getDate());
             } else {
+<<<<<<< HEAD
                 messageViewholder.receiverProfileImage.setVisibility(View.VISIBLE);
+=======
+>>>>>>> androidX
                 messageViewholder.receiverMessageText.setVisibility(View.VISIBLE);
                 messageViewholder.receiverMessageText.setBackgroundResource(R.drawable.their_message);
                 messageViewholder.receiverMessageText.setText(messages.getMessage() + "\n" + messages.getTime() + " - " + messages.getDate());
             }
+<<<<<<< HEAD
         } else if (fromMessageType.equals("image")) {
+=======
+        }
+        else if (fromMessageType.equals("image")) {
+>>>>>>> androidX
             if (fromuserid.equals(messageSenderId)) {
                 messageViewholder.messagesenderpicture.setVisibility(View.VISIBLE);
                 Picasso.get().load(messages.getMessage()).into(messageViewholder.messagesenderpicture);
             } else {
+<<<<<<< HEAD
                 messageViewholder.messagesenderpicture.setVisibility(View.VISIBLE);
                 messageViewholder.messagereceiverpicture.setVisibility(View.VISIBLE);
                 Picasso.get().load(messages.getMessage()).into(messageViewholder.messagereceiverpicture);
             }
         } else if (fromMessageType.equals("pdf") || fromMessageType.equals("docx")) {
+=======
+                messageViewholder.messagesenderpicture.setVisibility(View.GONE);
+                messageViewholder.messagereceiverpicture.setVisibility(View.VISIBLE);
+                Picasso.get().load(messages.getMessage()).into(messageViewholder.messagereceiverpicture);
+            }
+        }
+        else if (fromMessageType.equals("pdf") || fromMessageType.equals("docx")) {
+>>>>>>> androidX
             if (fromuserid.equals(messageSenderId)) {
                 messageViewholder.messagesenderpicture.setVisibility(View.VISIBLE);
                 Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/chatapp-10276.appspot.com/o/Image%20files%2Ffile.png?alt=media&token=fb090da2-a1cb-41c9-b19d-d03d1f30105d")
                         .into(messageViewholder.messagesenderpicture);
             } else {
+<<<<<<< HEAD
                 messageViewholder.receiverProfileImage.setVisibility(View.VISIBLE);
+=======
+>>>>>>> androidX
                 messageViewholder.messagereceiverpicture.setVisibility(View.VISIBLE);
                 Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/chatapp-10276.appspot.com/o/Image%20files%2Ffile.png?alt=media&token=fb090da2-a1cb-41c9-b19d-d03d1f30105d")
                         .into(messageViewholder.messagereceiverpicture);
@@ -345,14 +387,20 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     public class MessageViewholder extends RecyclerView.ViewHolder {
         public TextView senderMessageText, receiverMessageText;
+<<<<<<< HEAD
         public CircleImageView receiverProfileImage;
+=======
+>>>>>>> androidX
         public ImageView messagesenderpicture, messagereceiverpicture;
 
         public MessageViewholder(@NonNull View itemView) {
             super(itemView);
             senderMessageText = itemView.findViewById(R.id.sender_message_text);
             receiverMessageText = itemView.findViewById(R.id.receiver_message_text);
+<<<<<<< HEAD
             receiverProfileImage = itemView.findViewById(R.id.message_profile_image);
+=======
+>>>>>>> androidX
             messagereceiverpicture = itemView.findViewById(R.id.message_receiver_image_view);
             messagesenderpicture = itemView.findViewById(R.id.message_sender_image_view);
         }

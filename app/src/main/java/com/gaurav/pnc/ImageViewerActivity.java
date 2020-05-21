@@ -1,7 +1,11 @@
 package com.gaurav.pnc;
 
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.support.v7.app.AppCompatActivity;
+=======
+import androidx.appcompat.app.AppCompatActivity;
+>>>>>>> androidX
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;

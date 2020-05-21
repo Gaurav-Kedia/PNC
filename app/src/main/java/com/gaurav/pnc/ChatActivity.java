@@ -6,12 +6,21 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+=======
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
+>>>>>>> androidX
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -36,7 +45,10 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+<<<<<<< HEAD
 import com.squareup.picasso.Picasso;
+=======
+>>>>>>> androidX
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,6 +56,10 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+<<<<<<< HEAD
+=======
+import java.util.Objects;
+>>>>>>> androidX
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -227,6 +243,7 @@ public class ChatActivity extends AppCompatActivity {
                 final String messagepushid = usermessagekeyref.getKey();
                 final StorageReference filePath = storageReference.child(messagepushid + "." + checker);
 
+<<<<<<< HEAD
                 /*filePath.putFile(fileUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
@@ -261,6 +278,8 @@ public class ChatActivity extends AppCompatActivity {
                         lb.setMessage((int) p + " % Uploading.....");
                     }
                 });*/
+=======
+>>>>>>> androidX
                 uploadfiletask = filePath.putFile(fileUri);
                 uploadfiletask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -283,7 +302,11 @@ public class ChatActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Uri downloadurl = task.getResult();
                             myfileurl = downloadurl.toString();
+<<<<<<< HEAD
                             Map messagetextbody1 = new HashMap();
+=======
+                            Map<String, String> messagetextbody1 = new HashMap<String, String>();
+>>>>>>> androidX
                             messagetextbody1.put("message", myfileurl);
                             messagetextbody1.put("name", fileUri.getLastPathSegment());
                             messagetextbody1.put("type", checker);
@@ -292,11 +315,15 @@ public class ChatActivity extends AppCompatActivity {
                             messagetextbody1.put("messageID", messagepushid);
                             messagetextbody1.put("time", savecurrenttime);
                             messagetextbody1.put("date", savecurrentdate);
+<<<<<<< HEAD
                             /*Map messagebodydetails = new HashMap();
                             messagebodydetails.put(messagesenderref + "/" + messagepushid, messagetextbody1);
                             messagebodydetails.put(messagereceiverref + "/" + messagepushid, messagetextbody1);
                             rootref.updateChildren(messagebodydetails);*/
                             //update_chat();
+=======
+
+>>>>>>> androidX
                             String sendermsg1 = messagesenderref + "/" + messagepushid;
                             String receivermsg1 = messagereceiverref + "/" + messagepushid;
 
@@ -336,7 +363,11 @@ public class ChatActivity extends AppCompatActivity {
                     @Override
                     public Object then(@NonNull Task task) throws Exception {
                         if (!task.isSuccessful()) {
+<<<<<<< HEAD
                             throw task.getException();
+=======
+                            throw Objects.requireNonNull(task.getException());
+>>>>>>> androidX
                         }
                         return filePath.getDownloadUrl();
                     }
@@ -347,7 +378,11 @@ public class ChatActivity extends AppCompatActivity {
                             Uri downloadurl = task.getResult();
                             myurl = downloadurl.toString();
 
+<<<<<<< HEAD
                             Map messagetextbody2 = new HashMap();
+=======
+                            Map<String, String> messagetextbody2 = new HashMap<>();
+>>>>>>> androidX
                             messagetextbody2.put("message", myurl);
                             messagetextbody2.put("name", fileUri.getLastPathSegment());
                             messagetextbody2.put("type", checker);
@@ -357,7 +392,11 @@ public class ChatActivity extends AppCompatActivity {
                             messagetextbody2.put("time", savecurrenttime);
                             messagetextbody2.put("date", savecurrentdate);
 
+<<<<<<< HEAD
                             Map messagebodydetails = new HashMap();
+=======
+                            Map<String, Object> messagebodydetails = new HashMap<>();
+>>>>>>> androidX
                             messagebodydetails.put(messagesenderref + "/" + messagepushid, messagetextbody2);
                             messagebodydetails.put(messagereceiverref + "/" + messagepushid, messagetextbody2);
 
@@ -398,7 +437,11 @@ public class ChatActivity extends AppCompatActivity {
                     .child(messagesenderid).child(messagereceiverid).push();
 
             String messagepushid = usermessagekeyref.getKey();
+<<<<<<< HEAD
             Map messagetextbody = new HashMap();
+=======
+            Map<String, String> messagetextbody = new HashMap<>();
+>>>>>>> androidX
             messagetextbody.put("message", messagetext);
             messagetextbody.put("type", "text");
             messagetextbody.put("from", messagesenderid);
@@ -407,7 +450,11 @@ public class ChatActivity extends AppCompatActivity {
             messagetextbody.put("time", savecurrenttime);
             messagetextbody.put("date", savecurrentdate);
 
+<<<<<<< HEAD
             Map messagebodydetails = new HashMap();
+=======
+            Map<String, Object> messagebodydetails = new HashMap<>();
+>>>>>>> androidX
             messagebodydetails.put(messagesenderref + "/" + messagepushid, messagetextbody);
             messagebodydetails.put(messagereceiverref + "/" + messagepushid, messagetextbody);
 
@@ -424,6 +471,7 @@ public class ChatActivity extends AppCompatActivity {
             });
         }
     }
+<<<<<<< HEAD
 
     /*private void DisplayLastSeen(){
         rootref.child("Users").child(messagereceiverid)
@@ -453,4 +501,6 @@ public class ChatActivity extends AppCompatActivity {
                     }
                 });
     }*/
+=======
+>>>>>>> androidX
 }

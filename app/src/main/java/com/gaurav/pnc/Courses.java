@@ -1,15 +1,10 @@
 package com.gaurav.pnc;
 
 import android.app.ProgressDialog;
-<<<<<<< HEAD
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-=======
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
->>>>>>> androidX
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -32,11 +27,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
 
-<<<<<<< HEAD
-import java.util.ArrayList;
-
-=======
->>>>>>> androidX
 public class Courses extends AppCompatActivity {
 
     private String cource ;
@@ -70,11 +60,7 @@ public class Courses extends AppCompatActivity {
     }
 
     public void loadSubjects(){
-<<<<<<< HEAD
-        ProgressDialog loadingBar;
-=======
         final ProgressDialog loadingBar;
->>>>>>> androidX
         loadingBar = new ProgressDialog(this);
         loadingBar.setCancelable(false);
         loadingBar.setTitle("Loading....!");

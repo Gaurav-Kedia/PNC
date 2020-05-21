@@ -11,10 +11,7 @@
     app:contentPadding="5dp">
 
     <RelativeLayout
-<<<<<<< HEAD
-=======
         android:gravity="center"
->>>>>>> androidX
         android:id="@+id/list_layout"
         android:layout_width="match_parent"
         android:layout_height="105dp"

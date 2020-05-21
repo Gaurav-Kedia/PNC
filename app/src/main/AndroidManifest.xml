@@ -53,16 +53,10 @@
             android:name=".Courses"
             android:parentActivityName=".Home_activity" />
         <activity
-<<<<<<< HEAD
-            android:name=".Profile_Activity"
-            android:parentActivityName=".Home_activity" />
-        <activity android:name=".login_activity" />
-=======
             android:name=".Self_Profile_Activity"
             android:parentActivityName=".Home_activity" />
         <activity android:name=".login_activity"
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
->>>>>>> androidX
         <activity android:name=".Home_activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

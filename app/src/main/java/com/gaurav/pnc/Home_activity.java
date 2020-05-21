@@ -2,17 +2,6 @@ package com.gaurav.pnc;
 
 import android.content.Intent;
 import android.os.Bundle;
-<<<<<<< HEAD
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-=======
 import androidx.annotation.NonNull;
 import com.google.android.material.navigation.NavigationView;
 import androidx.core.view.GravityCompat;
@@ -23,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
->>>>>>> androidX
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -76,12 +64,8 @@ public class Home_activity extends AppCompatActivity {
         rootref = FirebaseDatabase.getInstance().getReference();
 
         recycler.setHasFixedSize(true);
-<<<<<<< HEAD
-        recycler.setLayoutManager(new LinearLayoutManager(this));
-=======
 //        recycler.setLayoutManager(new LinearLayoutManager(this));
         recycler.setLayoutManager(new GridLayoutManager(this,2));
->>>>>>> androidX
         inflate_recycler_view();
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -121,11 +105,8 @@ public class Home_activity extends AppCompatActivity {
     @Override
     protected void onStart() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
-<<<<<<< HEAD
-=======
         navigationView.getMenu().getItem(0).setChecked(true);
         drawerLayout.closeDrawers();
->>>>>>> androidX
         if (currentUser == null) {
             SendUserToLoginActivity();
         } else {
@@ -187,20 +168,12 @@ public class Home_activity extends AppCompatActivity {
     }
 
     private void verifyuserexistance() {
-<<<<<<< HEAD
-        currentuserid = mAuth.getCurrentUser().getUid();
-=======
         currentuserid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
->>>>>>> androidX
         rootref.child("Users").child(currentuserid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child("name").exists()) {
-<<<<<<< HEAD
-                    updateuserstatus("online");
-=======
                     updateuserinfo();
->>>>>>> androidX
                 } else {
                     SendUserToProfileActivity();
                 }
@@ -213,11 +186,7 @@ public class Home_activity extends AppCompatActivity {
     }
 
     private void SendUserToProfileActivity() {
-<<<<<<< HEAD
-        startActivity(new Intent(Home_activity.this, Profile_Activity.class));
-=======
         startActivity(new Intent(Home_activity.this, Self_Profile_Activity.class));
->>>>>>> androidX
     }
 
     private void SendUserToLoginActivity() {
@@ -282,27 +251,5 @@ public class Home_activity extends AppCompatActivity {
             }
         });
     }
-
-    private void inflate_recycler_view() {
-        course_list_ref = FirebaseDatabase.getInstance().getReference("Cources");
-        course_list_ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snap : dataSnapshot.getChildren()) {
-                    String name = snap.getKey();
-                    Course_list_model crs = new Course_list_model();
-                    crs.setCourse(name);
-                    courselist.add(crs);
-                }
-                pb.setVisibility(View.INVISIBLE);
-                adapter = new Course_list_adapter(Home_activity.this, courselist);
-                recycler.setAdapter(adapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
+    
 }

@@ -6,19 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".ChatActivity">
 
-<<<<<<< HEAD
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/private_messages_list_of_users"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/chat_linear_layout"></android.support.v7.widget.RecyclerView>
-=======
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/private_messages_list_of_users"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/chat_linear_layout"></androidx.recyclerview.widget.RecyclerView>
->>>>>>> androidX
 
     <LinearLayout
         android:id="@+id/chat_linear_layout"

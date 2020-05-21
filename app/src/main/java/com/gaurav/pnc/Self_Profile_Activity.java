@@ -21,11 +21,7 @@ public class Self_Profile_Activity extends AppCompatActivity {
     private DatabaseReference rootref;
     private String currentuserid;
 
-<<<<<<< HEAD:app/src/main/java/com/gaurav/pnc/Profile_Activity.java
-    private EditText name, phone;
-=======
     private EditText name, phone, design, member;
->>>>>>> androidX:app/src/main/java/com/gaurav/pnc/Self_Profile_Activity.java
     private Button updatebutton;
 
     @Override
@@ -58,11 +54,8 @@ public class Self_Profile_Activity extends AppCompatActivity {
                             User_info info = dataSnapshot.getValue(User_info.class);
                             name.setText(info.getName());
                             phone.setText(info.getPhone());
-<<<<<<< HEAD:app/src/main/java/com/gaurav/pnc/Profile_Activity.java
-=======
                             design.setText(info.getDesignation());
                             member.setText(info.getMembership());
->>>>>>> androidX:app/src/main/java/com/gaurav/pnc/Self_Profile_Activity.java
                         }
                     }
                     @Override
@@ -74,11 +67,8 @@ public class Self_Profile_Activity extends AppCompatActivity {
     private void initializefields() {
         name = findViewById(R.id.fullname);
         phone = findViewById(R.id.phone_ui);
-<<<<<<< HEAD:app/src/main/java/com/gaurav/pnc/Profile_Activity.java
-=======
         design = findViewById(R.id.designation_edittext);
         member = findViewById(R.id.membership_edittext);
->>>>>>> androidX:app/src/main/java/com/gaurav/pnc/Self_Profile_Activity.java
         updatebutton = findViewById(R.id.update_button);
     }
 }

@@ -2,19 +2,11 @@ package com.gaurav.pnc;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-<<<<<<< HEAD
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-=======
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
->>>>>>> androidX
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,12 +23,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-<<<<<<< HEAD
-import com.squareup.picasso.Picasso;
-
-import de.hdodenhof.circleimageview.CircleImageView;
-=======
->>>>>>> androidX
 
 public class Forum_activity extends AppCompatActivity {
 
@@ -100,15 +86,9 @@ public class Forum_activity extends AppCompatActivity {
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.exists()) {
                                     final String retname = dataSnapshot.child("name").getValue().toString();
-<<<<<<< HEAD
-                                    final String retstatus = dataSnapshot.child("status").getValue().toString();
-                                    holder.username.setText(retname);
-                                    holder.userstatus.setText(retstatus);
-=======
                                     final String retinfo = dataSnapshot.child("info").getValue().toString();
                                     holder.username.setText(retname);
                                     holder.userinfo.setText(retinfo);
->>>>>>> androidX
                                     loadingbar.dismiss();
 
                                     holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -145,22 +125,12 @@ public class Forum_activity extends AppCompatActivity {
 
     public static class ChatsViewHolder extends RecyclerView.ViewHolder {
 
-<<<<<<< HEAD
-        CircleImageView profileimage;
-        TextView username, userstatus;
-=======
         TextView username, userinfo;
->>>>>>> androidX
 
         public ChatsViewHolder(@NonNull View itemView) {
             super(itemView);
             username = itemView.findViewById(R.id.user_profile_name);
-<<<<<<< HEAD
-            userstatus = itemView.findViewById(R.id.user_status);
-            profileimage = itemView.findViewById(R.id.user_profile_image);
-=======
             userinfo = itemView.findViewById(R.id.user_info);
->>>>>>> androidX
         }
     }
 }

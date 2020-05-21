@@ -21,14 +21,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
-<<<<<<< HEAD
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.HashMap;
-=======
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,7 +30,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
->>>>>>> androidX
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -52,12 +43,9 @@ public class login_activity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ProgressDialog loadingBar;
     private String phoneNumber;
-<<<<<<< HEAD
-=======
 
     private DatabaseReference user_ref;
     private List<String> fac;
->>>>>>> androidX
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,24 +153,6 @@ public class login_activity extends AppCompatActivity {
     }
 
     private void SendUserToMMainActivity() {
-<<<<<<< HEAD
-        Intent mainactivity = new Intent(login_activity.this, Home_activity.class);
-        startActivity(mainactivity);
-
-        DatabaseReference rootref = FirebaseDatabase.getInstance().getReference();
-        String currentuserid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-
-        HashMap<String, Object> onlineStatemap = new HashMap<>();
-        onlineStatemap.put("phone", phoneNumber);
-        onlineStatemap.put("membership", "demo");
-        onlineStatemap.put("designation", "student");
-        onlineStatemap.put("status", "null_student");
-
-        rootref.child("Users").child(currentuserid)
-                .updateChildren(onlineStatemap);
-
-        finish();
-=======
         check_for_user();
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -240,6 +210,5 @@ public class login_activity extends AppCompatActivity {
             }
         }
         return false;
->>>>>>> androidX
     }
 }

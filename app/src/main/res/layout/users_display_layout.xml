@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-=======
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/user_display_cardview"
@@ -14,7 +11,6 @@
     app:contentPadding="5dp">
 
     <RelativeLayout
->>>>>>> androidX
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -24,15 +20,6 @@
         android:layout_margin="15dp"
         android:orientation="horizontal">
 
-<<<<<<< HEAD
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/user_profile_image"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:src="@drawable/profile_image"></de.hdodenhof.circleimageview.CircleImageView>
-
-=======
->>>>>>> androidX
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,8 +31,6 @@
                 android:orientation="horizontal">
 
                 <TextView
-<<<<<<< HEAD
-=======
                     android:id="@+id/faculty_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -55,28 +40,12 @@
                     android:textStyle="bold" />
 
                 <TextView
->>>>>>> androidX
                     android:id="@+id/user_profile_name"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:text="user name"
                     android:textAlignment="textStart"
                     android:textSize="19sp"
-<<<<<<< HEAD
-                    android:textStyle="bold"></TextView>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/user_status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="user status"
-                android:textAlignment="textStart"
-                android:textSize="16sp"></TextView>
-        </LinearLayout>
-    </LinearLayout>
-</RelativeLayout>
-=======
                     android:textStyle="bold"/>
             </LinearLayout>
 
@@ -106,4 +75,3 @@
     </LinearLayout>
 </RelativeLayout>
 </androidx.cardview.widget.CardView>
->>>>>>> androidX

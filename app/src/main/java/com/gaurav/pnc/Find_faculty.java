@@ -1,30 +1,5 @@
 package com.gaurav.pnc;
 
-<<<<<<< HEAD
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.gaurav.pnc.Models.User_info;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
-
-public class Find_faculty extends AppCompatActivity {
-    private Toolbar mtoolbar;
-    private RecyclerView FindFriendRecyclerList;
-    private DatabaseReference UserRef;
-=======
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -49,21 +24,10 @@ public class Find_faculty extends AppCompatActivity {
     private Find_faculty_adapter adapter;
     private List<User_info> faculty;
     private DatabaseReference user_ref;
->>>>>>> androidX
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_faculty);
-<<<<<<< HEAD
-        getSupportActionBar().setTitle("Find Faculty");
-        UserRef = FirebaseDatabase.getInstance().getReference().child("Users");
-
-        FindFriendRecyclerList = findViewById(R.id.find_friend_recyclerlist);
-        FindFriendRecyclerList.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    @Override
-=======
 
         getSupportActionBar().setTitle("Find Faculty");
 
@@ -108,7 +72,6 @@ public class Find_faculty extends AppCompatActivity {
     }
 
     /*@Override
->>>>>>> androidX
     protected void onStart() {
         super.onStart();
 
@@ -120,20 +83,12 @@ public class Find_faculty extends AppCompatActivity {
                     @Override
                     protected void onBindViewHolder(@NonNull FindFriendsViewHolder holder, final int position, @NonNull User_info model) {
                         holder.username.setText(model.getName());
-<<<<<<< HEAD
-                        holder.userstatus.setText(model.getStatus());
-=======
                         holder.userinfo.setText(model.getInfo());
->>>>>>> androidX
 
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 String visit_user_id = getRef(position).getKey();
-<<<<<<< HEAD
-
-=======
->>>>>>> androidX
                                 Intent profileintent = new Intent(Find_faculty.this, ProfileActivity.class);
                                 profileintent.putExtra("visit_user_id", visit_user_id);
                                 startActivity(profileintent);
@@ -153,22 +108,12 @@ public class Find_faculty extends AppCompatActivity {
     }
 
     public static class FindFriendsViewHolder extends RecyclerView.ViewHolder {
-<<<<<<< HEAD
-        TextView username, userstatus;
-=======
         TextView username, userinfo;
->>>>>>> androidX
 
         public FindFriendsViewHolder(@NonNull View itemView) {
             super(itemView);
             username = itemView.findViewById(R.id.user_profile_name);
-<<<<<<< HEAD
-            userstatus = itemView.findViewById(R.id.user_status);
-        }
-    }
-=======
             userinfo = itemView.findViewById(R.id.user_info);
         }
     }*/
->>>>>>> androidX
 }

@@ -1,10 +1,8 @@
 package com.gaurav.pnc.Adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +20,6 @@ public class Course_list_adapter extends RecyclerView.Adapter<Course_list_adapte
     Context mCtx;
     List<Course_list_model> courselist;
 
-
     public Course_list_adapter(Context mCtx, List<Course_list_model> courselist) {
         this.mCtx = mCtx;
         this.courselist = courselist;
@@ -36,7 +33,6 @@ public class Course_list_adapter extends RecyclerView.Adapter<Course_list_adapte
         return holder;
     }
 
-    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull Course_list_adapter.viewholder holder, int position) {
         final Course_list_model course = courselist.get(position);
@@ -48,6 +44,7 @@ public class Course_list_adapter extends RecyclerView.Adapter<Course_list_adapte
                 Intent yint = new Intent(view.getContext(), Courses.class);
                 yint.putExtra("Course", course.getCourse().toUpperCase());
                 context.startActivity(yint);
+
             }
         });
     }
@@ -59,13 +56,11 @@ public class Course_list_adapter extends RecyclerView.Adapter<Course_list_adapte
 
     public class viewholder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView name;
-        CardView card;
         private Couse_list_click_listener itemClick;
 
         public viewholder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.course_head);
-            card = itemView.findViewById(R.id.card);
             itemView.setOnClickListener(this);
         }
 

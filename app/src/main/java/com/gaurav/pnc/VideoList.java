@@ -1,15 +1,10 @@
 package com.gaurav.pnc;
 
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-
-import android.app.ProgressDialog;
-import android.content.Intent;
-
+import android.annotation.SuppressLint;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,18 +25,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
 
+
 public class VideoList extends AppCompatActivity {
 
 
     private String CourseName,subject,chapter;
-    private Button play;
-    private DatabaseReference rootref;
-    private DatabaseReference vdoListref;
-    private String chapterSl ;
-
-    public FirebaseRecyclerAdapter adapter;
-    private RecyclerView videoList;
-
+    YouTubePlayerView youTubePlayerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +40,7 @@ public class VideoList extends AppCompatActivity {
         CourseName = getIntent().getStringExtra("cource");
         subject = getIntent().getStringExtra("sujectName");
         chapter = getIntent().getStringExtra("Chapter");
+
         chapterSl = getIntent().getStringExtra("code");
 
 
@@ -64,10 +54,11 @@ public class VideoList extends AppCompatActivity {
         vdoListref = rootref.child("Cources").child(CourseName).child(subject).child("Chapters").child(chapterSl).child("video");
 
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        play = findViewById(R.id.play);
-        play.setOnClickListener(new View.OnClickListener() {
+        youTubePlayerView = findViewById(R.id.youtube_player_view);
+        getLifecycle().addObserver(youTubePlayerView);
+
+        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(),PlayVideo.class);
@@ -115,21 +106,10 @@ public class VideoList extends AppCompatActivity {
                 Log.d("Image Tag","https://img.youtube.com/vi/"+video.getCode()+"/mqdefault.jpg");
                 Picasso.get().load("https://img.youtube.com/vi/"+video.getCode()+"/mqdefault.jpg").fit()
                         .into(myVideoViewHolder.img);
+
             }
-        };
-        videoList.setAdapter(adapter);
-    }
+        });
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        adapter.startListening();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        adapter.stopListening();
     }
 
     @Override
@@ -153,5 +133,3 @@ class MyVideoViewHolder extends RecyclerView.ViewHolder{
         img = itemView.findViewById(R.id.thumb);
     }
 }
-
-

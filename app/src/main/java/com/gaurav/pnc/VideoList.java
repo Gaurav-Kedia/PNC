@@ -51,7 +51,7 @@ public class VideoList extends AppCompatActivity {
         chapterSl = getIntent().getStringExtra("code");
 
 
-        getActionBar().setTitle("Videos");
+        getSupportActionBar().setTitle("Videos");
 
         videoList = findViewById(R.id.videoList);
 

@@ -9,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.Menu;
@@ -54,6 +55,8 @@ public class Home_activity extends AppCompatActivity {
     private TextView header_name, header_phone;
     private String currentname, currentphone;
 
+    private TextView hayname;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +67,8 @@ public class Home_activity extends AppCompatActivity {
         rootref = FirebaseDatabase.getInstance().getReference();
 
         recycler.setHasFixedSize(true);
-        recycler.setLayoutManager(new LinearLayoutManager(this));
+//        recycler.setLayoutManager(new LinearLayoutManager(this));
+        recycler.setLayoutManager(new GridLayoutManager(this,2));
         inflate_recycler_view();
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -94,10 +98,17 @@ public class Home_activity extends AppCompatActivity {
 
                     case R.id.nav_aboutus:
                         return true;
+
+                    case R.id.logout:
+                        mAuth.signOut();
+                        SendUserToLoginActivity();
+                        finish();
+                        return true;
                 }
                 return true;
             }
         });
+
     }
 
     @Override
@@ -127,17 +138,26 @@ public class Home_activity extends AppCompatActivity {
                 SendUserToLoginActivity();
                 finish();
                 return true;
+            case R.id.profile_option:
+                SendUserToProfileActivity();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.logout, menu);
+        getMenuInflater().inflate(R.menu.profile, menu);
         return super.onCreateOptionsMenu(menu);
     }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.logout, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
 
     public void initialise() {
+        hayname = findViewById((R.id.hayname));
         recycler = findViewById(R.id.course_list_recycler_view);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
@@ -167,6 +187,7 @@ public class Home_activity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child("name").exists()) {
                     updateuserinfo();
+
                 } else {
                     SendUserToProfileActivity();
                 }
@@ -212,6 +233,7 @@ public class Home_activity extends AppCompatActivity {
                     currentphone = dataSnapshot.child("phone").getValue().toString();
                     header_name.setText(currentname);
                     header_phone.setText(currentphone);
+                    hayname.setText("Hey! "+currentname.split(" ")[0]);
                 }
 
                 @Override

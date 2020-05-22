@@ -5,32 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".VideoList"
+    android:gravity="center"
     android:orientation="vertical">
 
-<!--    <TextView-->
-<!--        android:id="@+id/fullTitle"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Hello"-->
-<!--        android:textColor="#000"-->
-<!--        android:textSize="30sp"-->
-<!--        />-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/videoList"
+        />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
-
-        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-            android:id="@+id/youtube_player_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:videoId="NHAIiAmxTAU"
-            app:showVideoDuration="true"
-            app:autoPlay="true"
-            app:showYouTubeButton="false"
-            app:showFullScreenButton="true" />
-
-    </LinearLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Goto Video Demo Page"
+            android:id="@+id/play"
+            />
 
 </LinearLayout>

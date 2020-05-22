@@ -11,12 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".VideoList"
-            android:theme="@style/Theme.Design.NoActionBar"
-            android:parentActivityName=".SubjectPageActivity"
-            ></activity>
-        <activity android:name=".SubjectPageActivity"
-            android:parentActivityName="Courses"  />
+
+
+        <activity android:name=".PlayVideo"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:parentActivityName=".VideoList"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity
+            android:name=".VideoList"
+            android:parentActivityName=".SubjectPageActivity"/>
+        <activity
+            android:name=".SubjectPageActivity"
+            android:parentActivityName=".Courses" />
         <activity
             android:name=".ChatActivity"
             android:parentActivityName=".Forum_activity" />
@@ -36,7 +42,8 @@
         <activity
             android:name=".Self_Profile_Activity"
             android:parentActivityName=".Home_activity" />
-        <activity android:name=".login_activity" />
+        <activity android:name=".login_activity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity android:name=".Home_activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

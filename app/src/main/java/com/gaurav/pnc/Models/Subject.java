@@ -1,4 +1,4 @@
-package com.gaurav.pnc;
+package com.gaurav.pnc.Models;
 
 public class Subject {
     private String name,img;

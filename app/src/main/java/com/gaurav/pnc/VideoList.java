@@ -29,7 +29,7 @@ import com.google.firebase.database.Query;
 
 public class VideoList extends AppCompatActivity {
 
-    private TextView fullTitle ;
+
     private String CourseName,subject,chapter;
     private Button play;
     private DatabaseReference rootref;
@@ -49,7 +49,9 @@ public class VideoList extends AppCompatActivity {
         subject = getIntent().getStringExtra("sujectName");
         chapter = getIntent().getStringExtra("Chapter");
         chapterSl = getIntent().getStringExtra("code");
-        fullTitle = findViewById(R.id.fullTitle);
+
+
+        getActionBar().setTitle("Videos");
 
         videoList = findViewById(R.id.videoList);
 
@@ -58,7 +60,6 @@ public class VideoList extends AppCompatActivity {
         rootref = FirebaseDatabase.getInstance().getReference();
         vdoListref = rootref.child("Cources").child(CourseName).child(subject).child("Chapters").child(chapterSl).child("video");
 
-        fullTitle.setText("Display the video list of "+CourseName+", "+subject+", "+chapter);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -91,7 +92,7 @@ public class VideoList extends AppCompatActivity {
                             @Override
                             public Video parseSnapshot(DataSnapshot snapshot) {
                                 loadingBar.dismiss();
-                                return new Video(snapshot.child("code").toString(),snapshot.child("name").toString(),Integer.parseInt(snapshot.getKey()));
+                                return new Video(snapshot.child("code").toString(),snapshot.child("name").getValue().toString(),Integer.parseInt(snapshot.getKey()));
                             }
 
                         })
@@ -101,7 +102,7 @@ public class VideoList extends AppCompatActivity {
             @NonNull
             @Override
             public MyVideoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View viewHolder = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_list_row, parent, false);
+                View viewHolder = LayoutInflater.from(parent.getContext()).inflate(R.layout.each_video_card, parent, false);
                 return new MyVideoViewHolder(viewHolder);
             }
 

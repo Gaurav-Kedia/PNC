@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.os.StrictMode;
 
 
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
@@ -19,6 +20,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 public class PlayVideo extends AppCompatActivity {
 
     YouTubePlayerView youTubePlayerView;
+    String code;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,13 +30,14 @@ public class PlayVideo extends AppCompatActivity {
         youTubePlayerView = findViewById(R.id.youtube_player_view);
         getLifecycle().addObserver(youTubePlayerView);
 
+        code = getIntent().getStringExtra("code");
+
         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
             public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                String videoId = "NHAIiAmxTAU";
-                youTubePlayer.loadVideo(videoId, 1f);
+                String videoId = code;
+                youTubePlayer.loadVideo(videoId, 0f);
                 addFullScreenListenerToPlayer();
-
             }
         });
     }

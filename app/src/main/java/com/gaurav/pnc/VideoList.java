@@ -1,10 +1,15 @@
 package com.gaurav.pnc;
 
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
-import android.content.pm.ActivityInfo;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
+
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -39,9 +44,6 @@ public class VideoList extends AppCompatActivity {
 
 
     private String CourseName,subject,chapter;
-<<<<<<< HEAD
-    YouTubePlayerView youTubePlayerView;
-=======
     private DatabaseReference rootref;
     private DatabaseReference vdoListref;
     private String chapterSl ;
@@ -49,7 +51,6 @@ public class VideoList extends AppCompatActivity {
     public FirebaseRecyclerAdapter adapter;
     private RecyclerView videoList;
 
->>>>>>> 33ffc0c403c7e282df62cd812d6230dfc17dd1e4
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +60,6 @@ public class VideoList extends AppCompatActivity {
         CourseName = getIntent().getStringExtra("cource");
         subject = getIntent().getStringExtra("sujectName");
         chapter = getIntent().getStringExtra("Chapter");
-<<<<<<< HEAD
-//        fullTitle = findViewById(R.id.fullTitle);
-
-//        fullTitle.setText("Display the video list of "+CourseName+", "+subject+", "+chapter);
-=======
         chapterSl = getIntent().getStringExtra("code");
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -79,20 +75,9 @@ public class VideoList extends AppCompatActivity {
         rootref = FirebaseDatabase.getInstance().getReference();
         vdoListref = rootref.child("Cources").child(CourseName).child(subject).child("Chapters").child(chapterSl).child("video");
 
->>>>>>> 33ffc0c403c7e282df62cd812d6230dfc17dd1e4
 
-        youTubePlayerView = findViewById(R.id.youtube_player_view);
-        getLifecycle().addObserver(youTubePlayerView);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-<<<<<<< HEAD
-        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-            @Override
-            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                String videoId = "NHAIiAmxTAU";
-                youTubePlayer.loadVideo(videoId, 1f);
-                addFullScreenListenerToPlayer();
-
-=======
 
         loadVideos();
 
@@ -147,20 +132,25 @@ public class VideoList extends AppCompatActivity {
                         startActivity(i);
                     }
                 });
->>>>>>> 33ffc0c403c7e282df62cd812d6230dfc17dd1e4
             }
-        });
+        };
+        videoList.setAdapter(adapter);
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 
     @Override
     public void onBackPressed() {
-<<<<<<< HEAD
-        if (youTubePlayerView.isFullScreen())
-            youTubePlayerView.exitFullScreen();
-        else
-            super.onBackPressed();
-=======
         super.onBackPressed();
     }
 
@@ -227,26 +217,7 @@ class MyVideoViewHolder extends RecyclerView.ViewHolder{
         name = itemView.findViewById(R.id.course_head);
         img = itemView.findViewById(R.id.thumb);
         time = itemView.findViewById(R.id.time);
->>>>>>> 33ffc0c403c7e282df62cd812d6230dfc17dd1e4
     }
 }
 
-    private void addFullScreenListenerToPlayer() {
-        youTubePlayerView.addFullScreenListener(new YouTubePlayerFullScreenListener() {
-            @SuppressLint("SourceLockedOrientationActivity")
-            @Override
-            public void onYouTubePlayerEnterFullScreen() {
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-<<<<<<< HEAD
-            }
-
-            @SuppressLint("SourceLockedOrientationActivity")
-            @Override
-            public void onYouTubePlayerExitFullScreen() {
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            }
-        });
-    }}
-=======
->>>>>>> 33ffc0c403c7e282df62cd812d6230dfc17dd1e4

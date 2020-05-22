@@ -54,6 +54,8 @@ public class Home_activity extends AppCompatActivity {
     private TextView header_name, header_phone;
     private String currentname, currentphone;
 
+    private TextView hayname;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +97,12 @@ public class Home_activity extends AppCompatActivity {
 
                     case R.id.nav_aboutus:
                         return true;
+
+                    case R.id.logout:
+                        mAuth.signOut();
+                        SendUserToLoginActivity();
+                        finish();
+                        return true;
                 }
                 return true;
             }
@@ -129,6 +137,9 @@ public class Home_activity extends AppCompatActivity {
                 SendUserToLoginActivity();
                 finish();
                 return true;
+            case R.id.profile_option:
+                SendUserToProfileActivity();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -145,6 +156,7 @@ public class Home_activity extends AppCompatActivity {
 //    }
 
     public void initialise() {
+        hayname = findViewById((R.id.hayname));
         recycler = findViewById(R.id.course_list_recycler_view);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
@@ -174,6 +186,7 @@ public class Home_activity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child("name").exists()) {
                     updateuserinfo();
+
                 } else {
                     SendUserToProfileActivity();
                 }
@@ -219,6 +232,7 @@ public class Home_activity extends AppCompatActivity {
                     currentphone = dataSnapshot.child("phone").getValue().toString();
                     header_name.setText(currentname);
                     header_phone.setText(currentphone);
+                    hayname.setText("Hey! "+currentname.split(" ")[0]);
                 }
 
                 @Override

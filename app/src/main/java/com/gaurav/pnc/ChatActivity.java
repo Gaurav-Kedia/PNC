@@ -258,7 +258,6 @@ public class ChatActivity extends AppCompatActivity {
                             messagetextbody1.put("messageID", messagepushid);
                             messagetextbody1.put("time", savecurrenttime);
                             messagetextbody1.put("date", savecurrentdate);
-
                             String sendermsg1 = messagesenderref + "/" + messagepushid;
                             String receivermsg1 = messagereceiverref + "/" + messagepushid;
 

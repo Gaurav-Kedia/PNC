@@ -50,7 +50,6 @@ public class Home_activity extends AppCompatActivity {
     private DatabaseReference course_list_ref;
     private Course_list_adapter adapter;
     private RecyclerView recycler;
-
     private String currentuserid;
     private TextView header_name, header_phone;
     private String currentname, currentphone;
@@ -266,4 +265,5 @@ public class Home_activity extends AppCompatActivity {
             }
         });
     }
+    
 }

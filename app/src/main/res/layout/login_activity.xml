@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".login_activity"
-    android:background="#fff"
-    >
+    android:background="#fff" >
 
     <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
@@ -160,16 +159,4 @@
 
 
 
-
-<!--    <view-->
-<!--        android:id="@+id/rectangle1"-->
-<!--        android:layout_width="323dp"-->
-<!--        android:layout_height="323dp"-->
-<!--        android:background="@drawable/rectangle_8_shape"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent">-->
-
-
-    </RelativeLayout>
+</RelativeLayout>

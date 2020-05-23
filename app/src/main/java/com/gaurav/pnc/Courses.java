@@ -30,7 +30,7 @@ import com.squareup.picasso.Picasso;
 public class Courses extends AppCompatActivity {
 
     private String cource ;
-    private TextView cname;
+//    private TextView cname;
     public RecyclerView subjects;
     private DatabaseReference rootref;
     private DatabaseReference courseref;
@@ -41,13 +41,13 @@ public class Courses extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_courses);
-        cname = findViewById(R.id.cname);
+//        cname = findViewById(R.id.cname);
         subjects = findViewById(R.id.subjects);
 
         rootref = FirebaseDatabase.getInstance().getReference();
         cource = getIntent().getStringExtra("Course");
         courseref = rootref.child("Cources").child(cource);
-        cname.setText(cource);
+//        cname.setText(cource);
 
         DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
@@ -55,6 +55,7 @@ public class Courses extends AppCompatActivity {
 
         subjects.setLayoutManager(new GridLayoutManager(this, (int) (dpWidth/180)));
 
+        getSupportActionBar().setTitle(cource);
         loadSubjects();
     }
 

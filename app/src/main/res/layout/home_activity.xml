@@ -8,15 +8,23 @@
     android:id="@+id/drawer_layout"
     tools:context=".Home_activity">
 
+<!--    <pl.droidsonroids.gif.GifImageView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:src="@drawable/gif_file"-->
+<!--        />-->
+
     <ProgressBar
         android:id="@+id/ProgressBB"
         style="?android:attr/indeterminateProgressStyle"
         android:layout_width="300dp"
         android:layout_height="150dp"
-        android:progressTint="@color/colorPrimaryDark" />
+        android:progressTint="@color/colorPrimaryDark"
+        />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/course_list_recycler_view"
+    <LinearLayout
+        android:layout_marginHorizontal="15dp"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -49,6 +57,8 @@
             android:layout_height="match_parent" />
 
     </LinearLayout>
+
+
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
         android:id="@+id/navigationView"

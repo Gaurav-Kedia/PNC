@@ -11,8 +11,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
         <activity android:name=".PlayVideo"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName=".VideoList"
@@ -23,19 +21,6 @@
         <activity
             android:name=".SubjectPageActivity"
             android:parentActivityName=".Courses" />
-        <activity
-            android:name=".ChatActivity"
-            android:parentActivityName=".Forum_activity" />
-        <activity android:name=".ImageViewerActivity" />
-        <activity
-            android:name=".ProfileActivity"
-            android:parentActivityName=".Find_faculty" />
-        <activity
-            android:name=".Find_faculty"
-            android:parentActivityName=".Forum_activity" />
-        <activity
-            android:name=".Forum_activity"
-            android:parentActivityName=".Home_activity" />
         <activity
             android:name=".ChatActivity"
             android:parentActivityName=".Forum_activity" />

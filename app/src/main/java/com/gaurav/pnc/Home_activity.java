@@ -50,6 +50,7 @@ public class Home_activity extends AppCompatActivity {
     private DatabaseReference course_list_ref;
     private Course_list_adapter adapter;
     private RecyclerView recycler;
+
     private String currentuserid;
     private TextView header_name, header_phone;
     private String currentname, currentphone;
@@ -234,7 +235,6 @@ public class Home_activity extends AppCompatActivity {
                     header_phone.setText(currentphone);
                     hayname.setText("Hey! "+currentname.split(" ")[0]);
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -255,6 +255,8 @@ public class Home_activity extends AppCompatActivity {
                     courselist.add(crs);
                 }
                 pb.setVisibility(View.INVISIBLE);
+                TextView txt = findViewById(R.id.my_courses_home_activity);
+                txt.setVisibility(View.VISIBLE);
                 adapter = new Course_list_adapter(Home_activity.this, courselist);
                 recycler.setAdapter(adapter);
             }
@@ -265,5 +267,4 @@ public class Home_activity extends AppCompatActivity {
             }
         });
     }
-    
 }

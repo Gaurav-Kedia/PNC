@@ -159,6 +159,7 @@ public class login_activity extends AppCompatActivity {
             @Override
             public void run() {
                 if (check_phone()) {
+                    finish();
                     Intent mainactivity = new Intent(login_activity.this, Home_activity.class);
                     startActivity(mainactivity);
                     loadingBar.dismiss();
@@ -196,7 +197,6 @@ public class login_activity extends AppCompatActivity {
                     fac.add(phone);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }

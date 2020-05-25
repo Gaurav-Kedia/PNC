@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp">
+    android:layout_margin="5dp">
 
     <TextView
         android:fontFamily="Product Sans"
@@ -12,17 +12,15 @@
         android:layout_height="wrap_content"
         android:text="Subjects"
         android:background="@drawable/rectangle_6_shape"
-        android:textSize="30dp"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
+        android:layout_margin="5dp"
         android:paddingHorizontal="10dp"
         android:paddingVertical="7dp"
-        android:layout_margin="10dp"
-        />
+        android:textSize="31sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/subjects"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
 
 </LinearLayout>

@@ -2,10 +2,14 @@ package com.gaurav.pnc;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.gaurav.pnc.Models.User_info;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,7 +25,7 @@ public class Self_Profile_Activity extends AppCompatActivity {
     private DatabaseReference rootref;
     private String currentuserid;
 
-    private EditText name, phone, design, member;
+    private EditText name, email, phone, design, member;
     private Button updatebutton;
 
     @Override
@@ -39,7 +43,11 @@ public class Self_Profile_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String user_name = name.getText().toString().trim();
+                String user_email = email.getText().toString().trim();
+
                 rootref.child("Users").child(currentuserid).child("name").setValue(user_name);
+                rootref.child("Users").child(currentuserid).child("email").setValue(user_email);
+                Toast.makeText(Self_Profile_Activity.this, "Updated Success", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
@@ -52,7 +60,9 @@ public class Self_Profile_Activity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
                             User_info info = dataSnapshot.getValue(User_info.class);
+                            assert info != null;
                             name.setText(info.getName());
+                            email.setText(info.getEmail());
                             phone.setText(info.getPhone());
                             design.setText(info.getDesignation());
                             member.setText(info.getMembership());
@@ -66,9 +76,28 @@ public class Self_Profile_Activity extends AppCompatActivity {
 
     private void initializefields() {
         name = findViewById(R.id.fullname);
+        email = findViewById(R.id.email_ui);
         phone = findViewById(R.id.phone_ui);
         design = findViewById(R.id.designation_edittext);
         member = findViewById(R.id.membership_edittext);
         updatebutton = findViewById(R.id.update_button);
+    }
+
+    public void close_keyboard_phone(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        assert imm != null;
+        imm.hideSoftInputFromWindow(phone.getWindowToken(), 0);
+    }
+
+    public void close_keyboard_design(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        assert imm != null;
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public void close_keyboard_member(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        assert imm != null;
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

@@ -66,24 +66,17 @@ public class VideoList extends AppCompatActivity {
         chapterSl = getIntent().getStringExtra("code");
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
         StrictMode.setThreadPolicy(policy);
 
         getSupportActionBar().setTitle("Videos");
 
         videoList = findViewById(R.id.videoList);
-
         videoList.setLayoutManager(new LinearLayoutManager(this));
 
         rootref = FirebaseDatabase.getInstance().getReference();
         vdoListref = rootref.child("Cources").child(CourseName).child(subject).child("Chapters").child(chapterSl).child("video");
-
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
         loadVideos();
-
     }
 
     private void loadVideos() {
@@ -199,26 +192,20 @@ public class VideoList extends AppCompatActivity {
             try {
 
                 JSONObject o = new JSONObject(response.toString());
-
                 JSONArray items = new JSONArray(o.get("items").toString());
-
                 JSONObject contentDetails = (JSONObject) items.getJSONObject(0).get("contentDetails");
 
                 Log.d("My App", contentDetails.get("duration").toString());
-
                 String string2 = contentDetails.get("duration").toString();
                 String t = string2.replaceAll("[PT]","");
                 String t2 = t.replace("M"," : ").replace("H"," : ").replace("S","");
                 return t2;
-
             } catch (Throwable t) {
                 Log.e("My App", "Could not parse malformed JSON: \"" + t.getMessage() + "\"");
             }
-
         } else {
                 System.out.println("GET request not worked");
             }
-
         return "0";
     }
 

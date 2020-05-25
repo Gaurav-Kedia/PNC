@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -25,9 +26,11 @@ import com.firebase.ui.database.SnapshotParser;
 import com.gaurav.pnc.Models.Video;
 import com.gaurav.pnc.config.YouTubeConfig;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -90,6 +93,20 @@ public class VideoList extends AppCompatActivity {
         loadingBar.setTitle("Loading...");
         loadingBar.setMessage("Please Wait");
         loadingBar.show();
+
+        vdoListref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getChildrenCount() == 0){
+                    loadingBar.dismiss();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         Query query = vdoListref;
 
@@ -203,6 +220,17 @@ public class VideoList extends AppCompatActivity {
             }
 
         return "0";
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
 

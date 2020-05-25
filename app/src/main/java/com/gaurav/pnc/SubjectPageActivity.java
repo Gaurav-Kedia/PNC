@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -23,9 +24,11 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.database.SnapshotParser;
 import com.gaurav.pnc.Models.Chapter;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class SubjectPageActivity extends AppCompatActivity {
@@ -68,9 +71,25 @@ public class SubjectPageActivity extends AppCompatActivity {
         loadingBar.setCancelable(false);
         loadingBar.setTitle("Loading...");
         loadingBar.setMessage("Please Wait");
-        loadingBar.show();
 
-        Query query = chapteref;
+
+        chapteref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.getChildrenCount() > 0){
+                        loadingBar.show();
+                    }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+            Query query = chapteref;
         FirebaseRecyclerOptions<Chapter> options =
                 new FirebaseRecyclerOptions.Builder<Chapter>()
                         .setQuery(query, new SnapshotParser<Chapter>() {
@@ -175,5 +194,16 @@ public class SubjectPageActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

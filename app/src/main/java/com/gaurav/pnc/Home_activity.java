@@ -10,7 +10,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -52,7 +51,7 @@ public class Home_activity extends AppCompatActivity {
     private RecyclerView recycler;
 
     private String currentuserid;
-    private TextView header_name, header_phone;
+    private TextView header_name, header_email;
     private String currentname, currentphone;
 
     private TextView hayname;
@@ -172,7 +171,7 @@ public class Home_activity extends AppCompatActivity {
 
         mHeader = navigationView.getHeaderView(0);
         header_name = mHeader.findViewById(R.id.header_user_name);
-        header_phone = mHeader.findViewById(R.id.header_user_email);
+        header_email = mHeader.findViewById(R.id.header_user_email);
 
         mtoggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
         drawerLayout.addDrawerListener(mtoggle);
@@ -230,9 +229,9 @@ public class Home_activity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     currentname = dataSnapshot.child("name").getValue().toString();
-                    currentphone = dataSnapshot.child("phone").getValue().toString();
+                    currentphone = dataSnapshot.child("email").getValue().toString();
                     header_name.setText(currentname);
-                    header_phone.setText(currentphone);
+                    header_email.setText(currentphone);
                     hayname.setText("Hey! "+currentname.split(" ")[0]);
                 }
                 @Override
@@ -245,9 +244,10 @@ public class Home_activity extends AppCompatActivity {
 
     private void inflate_recycler_view() {
         course_list_ref = FirebaseDatabase.getInstance().getReference("Cources");
-        course_list_ref.addListenerForSingleValueEvent(new ValueEventListener() {
+        course_list_ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                courselist = new ArrayList<>();
                 for (DataSnapshot snap : dataSnapshot.getChildren()) {
                     String name = snap.getKey();
                     Course_list_model crs = new Course_list_model();

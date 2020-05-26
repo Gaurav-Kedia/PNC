@@ -1,26 +1,28 @@
 package com.gaurav.pnc;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import com.google.android.material.navigation.NavigationView;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.gaurav.pnc.Adapters.Course_list_adapter;
 import com.gaurav.pnc.Models.Course_list_model;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +35,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+
+import static com.gaurav.pnc.login_activity.MyPREFERENCES;
 
 public class Home_activity extends AppCompatActivity {
 
@@ -56,10 +60,13 @@ public class Home_activity extends AppCompatActivity {
 
     private TextView hayname;
 
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
+        sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         initialise();
 
         mAuth = FirebaseAuth.getInstance();
@@ -100,6 +107,9 @@ public class Home_activity extends AppCompatActivity {
 
                     case R.id.logout:
                         mAuth.signOut();
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("islogin", "false");
+                        editor.apply();
                         SendUserToLoginActivity();
                         finish();
                         return true;
@@ -112,12 +122,16 @@ public class Home_activity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        /*FirebaseUser currentUser = mAuth.getCurrentUser();
         navigationView.getMenu().getItem(0).setChecked(true);
         drawerLayout.closeDrawers();
         if (currentUser == null) {
             SendUserToLoginActivity();
         } else {
+            verifyuserexistance();
+        }*/
+        String islogin = sharedPreferences.getString("islogin", "false");
+        if (islogin.equalsIgnoreCase("true")) {
             verifyuserexistance();
         }
         super.onStart();
@@ -134,6 +148,9 @@ public class Home_activity extends AppCompatActivity {
                 return true;
             case R.id.logout_option:
                 mAuth.signOut();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("islogin", "false");
+                editor.apply();
                 SendUserToLoginActivity();
                 finish();
                 return true;
@@ -221,7 +238,7 @@ public class Home_activity extends AppCompatActivity {
         HashMap<String, Object> onlineStatemap = new HashMap<>();
         onlineStatemap.put("time", savecurrenttime);
         onlineStatemap.put("date", savecurrentdate);
-        if (currentuserid != null) {
+        if (mAuth.getCurrentUser() != null) {
             currentuserid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
             rootref.child("Users").child(currentuserid)
                     .updateChildren(onlineStatemap);

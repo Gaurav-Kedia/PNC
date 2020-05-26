@@ -41,14 +41,14 @@
             android:name=".Self_Profile_Activity"
             android:parentActivityName=".Home_activity" />
         <activity android:name=".login_activity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
-        <activity android:name=".Home_activity">
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Home_activity" />
     </application>
 
 </manifest>

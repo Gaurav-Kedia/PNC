@@ -150,14 +150,19 @@ public class Courses extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     System.out.println("Hello "+dataSnapshot.getValue().toString());
-                                    if (dataSnapshot.child(cource).child("has_access").getValue().toString().equals("YES")){
-                                        Intent i = new Intent(getApplicationContext(),SubjectPageActivity.class);
-                                        i.putExtra("cource",cource);
-                                        i.putExtra("sujectName",model.getName());
-                                        startActivity(i);
+                                    if(dataSnapshot.child(cource).exists()){
+                                        if (dataSnapshot.child(cource).child("has_access").getValue().toString().equals("YES")){
+                                            Intent i = new Intent(getApplicationContext(),SubjectPageActivity.class);
+                                            i.putExtra("cource",cource);
+                                            i.putExtra("sujectName",model.getName());
+                                            startActivity(i);
+                                        }else{
+                                            Toast.makeText(getApplicationContext(),"You Have not access to this course ! Please Contact Your admin or Faculty",Toast.LENGTH_LONG).show();
+                                        }
                                     }else{
                                         Toast.makeText(getApplicationContext(),"You Have not access to this course ! Please Contact Your admin or Faculty",Toast.LENGTH_LONG).show();
                                     }
+
                                 }
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -167,7 +172,6 @@ public class Courses extends AppCompatActivity {
                         }
                     }
                 });
-
             }
         };
 

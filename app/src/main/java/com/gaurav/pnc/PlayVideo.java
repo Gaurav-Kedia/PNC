@@ -35,11 +35,14 @@ public class PlayVideo extends AppCompatActivity {
         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
             public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                youTubePlayer.pause();
                 String videoId = code;
                 youTubePlayer.loadVideo(videoId, 0f);
+                youTubePlayer.play();
                 addFullScreenListenerToPlayer();
             }
         });
+
     }
 
     @Override

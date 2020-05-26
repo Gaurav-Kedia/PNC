@@ -169,6 +169,7 @@ public class login_activity extends AppCompatActivity {
                     String currentuserid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
                     HashMap<String, Object> onlineStatemap = new HashMap<>();
                     onlineStatemap.put("phone", phoneNumber);
+                    onlineStatemap.put("email", "xyz@example.com");
                     onlineStatemap.put("membership", "demo");
                     onlineStatemap.put("designation", "student");
                     onlineStatemap.put("info", "null_student");
@@ -179,7 +180,7 @@ public class login_activity extends AppCompatActivity {
                     startActivity(mainactivity);
                 }
             }
-        }, 5000);
+        }, 10000);
     }
 
     private void check_for_user() {
@@ -193,7 +194,6 @@ public class login_activity extends AppCompatActivity {
                     User_info f = new User_info();
                     String phone = p.getPhone();
                     f.setPhone(phone);
-                    Log.i("list_phone_numbers", phone);
                     fac.add(phone);
                 }
             }

@@ -160,7 +160,9 @@ public class Courses extends AppCompatActivity {
                                         }
                                     } else {
                                         Toast.makeText(getApplicationContext(), "You Have not access to this course ! Please Contact Admin", Toast.LENGTH_LONG).show();
+
                                     }
+
                                 }
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -170,7 +172,6 @@ public class Courses extends AppCompatActivity {
                         }
                     }
                 });
-
             }
         };
 

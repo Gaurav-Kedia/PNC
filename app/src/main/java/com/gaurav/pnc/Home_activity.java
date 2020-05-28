@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -28,6 +29,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -103,6 +105,7 @@ public class Home_activity extends AppCompatActivity {
                         return true;
 
                     case R.id.nav_aboutus:
+                        SendUserToAboutUsActivity();
                         return true;
 
                     case R.id.logout:
@@ -118,6 +121,16 @@ public class Home_activity extends AppCompatActivity {
             }
         });
 
+        ImageView banner = findViewById(R.id.banner);
+        Picasso.get().load("https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=841&q=80")
+                .fit()
+                .into(banner);
+
+    }
+
+    private void SendUserToAboutUsActivity() {
+        Intent i = new Intent(getApplicationContext(),AboutusActivity.class);
+        startActivity(i);
     }
 
     @Override

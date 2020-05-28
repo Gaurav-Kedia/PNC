@@ -10,9 +10,11 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".AboutusActivity"
+            android:parentActivityName=".Home_activity"/>
         <activity
             android:name=".assign_list"
-            android:parentActivityName=".SubjectPageActivity"></activity>
+            android:parentActivityName=".SubjectPageActivity" />
         <activity
             android:name=".study_mat_list"
             android:parentActivityName=".SubjectPageActivity" />

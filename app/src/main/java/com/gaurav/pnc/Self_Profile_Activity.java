@@ -1,8 +1,5 @@
 package com.gaurav.pnc;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +7,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.gaurav.pnc.Models.User_info;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,7 +25,7 @@ public class Self_Profile_Activity extends AppCompatActivity {
     private DatabaseReference rootref;
     private String currentuserid;
 
-    private EditText name, email, phone, design, member;
+    private EditText name, email, phone, design;
     private Button updatebutton;
 
     @Override
@@ -65,7 +65,6 @@ public class Self_Profile_Activity extends AppCompatActivity {
                             email.setText(info.getEmail());
                             phone.setText(info.getPhone());
                             design.setText(info.getDesignation());
-                            member.setText(info.getMembership());
                         }
                     }
                     @Override
@@ -79,7 +78,6 @@ public class Self_Profile_Activity extends AppCompatActivity {
         email = findViewById(R.id.email_ui);
         phone = findViewById(R.id.phone_ui);
         design = findViewById(R.id.designation_edittext);
-        member = findViewById(R.id.membership_edittext);
         updatebutton = findViewById(R.id.update_button);
     }
 
@@ -90,12 +88,6 @@ public class Self_Profile_Activity extends AppCompatActivity {
     }
 
     public void close_keyboard_design(View view) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        assert imm != null;
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
-    public void close_keyboard_member(View view) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         assert imm != null;
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);

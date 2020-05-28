@@ -3,13 +3,14 @@ package com.gaurav.pnc.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.gaurav.pnc.Courses;
 import com.gaurav.pnc.Models.Course_list_model;
@@ -21,7 +22,6 @@ public class Course_list_adapter extends RecyclerView.Adapter<Course_list_adapte
 
     Context mCtx;
     List<Course_list_model> courselist;
-
 
     public Course_list_adapter(Context mCtx, List<Course_list_model> courselist) {
         this.mCtx = mCtx;

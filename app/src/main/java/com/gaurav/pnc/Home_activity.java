@@ -4,10 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -87,10 +88,8 @@ public class Home_activity extends AppCompatActivity {
                         drawerLayout.closeDrawers();
                         return true;
 
-                    case R.id.assignments_option:
-                        return true;
-
-                    case R.id.membership_option:
+                    case R.id.mycourses_option:
+                        startActivity(new Intent(Home_activity.this, Courses_my.class));
                         return true;
 
                     case R.id.forum_option:
@@ -102,10 +101,15 @@ public class Home_activity extends AppCompatActivity {
                         return true;
 
                     case R.id.nav_support:
+                        startActivity(new Intent(Home_activity.this, Support.class));
                         return true;
 
                     case R.id.nav_aboutus:
                         SendUserToAboutUsActivity();
+                        return true;
+
+                    case R.id.tnc_aboutus:
+                        SendUserToTncActivity();
                         return true;
 
                     case R.id.logout:
@@ -128,21 +132,18 @@ public class Home_activity extends AppCompatActivity {
 
     }
 
+    private void SendUserToTncActivity() {
+        Intent i = new Intent(getApplicationContext(), tnc.class);
+        startActivity(i);
+    }
+
     private void SendUserToAboutUsActivity() {
-        Intent i = new Intent(getApplicationContext(),AboutusActivity.class);
+        Intent i = new Intent(getApplicationContext(), AboutusActivity.class);
         startActivity(i);
     }
 
     @Override
     protected void onStart() {
-        /*FirebaseUser currentUser = mAuth.getCurrentUser();
-        navigationView.getMenu().getItem(0).setChecked(true);
-        drawerLayout.closeDrawers();
-        if (currentUser == null) {
-            SendUserToLoginActivity();
-        } else {
-            verifyuserexistance();
-        }*/
         String islogin = sharedPreferences.getString("islogin", "false");
         if (islogin.equalsIgnoreCase("true")) {
             verifyuserexistance();
@@ -159,31 +160,9 @@ public class Home_activity extends AppCompatActivity {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
-            case R.id.logout_option:
-                mAuth.signOut();
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("islogin", "false");
-                editor.apply();
-                SendUserToLoginActivity();
-                finish();
-                return true;
-            case R.id.profile_option:
-                SendUserToProfileActivity();
-                return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.profile, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.logout, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
 
     public void initialise() {
         hayname = findViewById((R.id.hayname));
@@ -285,8 +264,14 @@ public class Home_activity extends AppCompatActivity {
                     courselist.add(crs);
                 }
                 pb.setVisibility(View.INVISIBLE);
+
                 TextView txt = findViewById(R.id.my_courses_home_activity);
+                CardView crd = findViewById(R.id.home_cardview);
+                LinearLayout lnr = findViewById(R.id.mycourses_lnr);
+                lnr.setVisibility(View.VISIBLE);
+                crd.setVisibility(View.VISIBLE);
                 txt.setVisibility(View.VISIBLE);
+
                 adapter = new Course_list_adapter(Home_activity.this, courselist);
                 recycler.setAdapter(adapter);
             }

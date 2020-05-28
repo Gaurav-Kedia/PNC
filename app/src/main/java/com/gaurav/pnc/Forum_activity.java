@@ -2,17 +2,18 @@ package com.gaurav.pnc;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -78,6 +79,9 @@ public class Forum_activity extends AppCompatActivity {
                     chatList.setVisibility(View.VISIBLE);
                     TextView no = findViewById(R.id.no_one_to_chat);
                     no.setVisibility(View.GONE);
+                } else {
+                    TextView no = findViewById(R.id.no_one_to_chat);
+                    no.setVisibility(View.VISIBLE);
                 }
             }
 

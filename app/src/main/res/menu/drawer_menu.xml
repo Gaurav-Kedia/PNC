@@ -6,13 +6,9 @@
             android:icon="@drawable/ic_home"
             android:title="Home" />
         <item
-            android:id="@+id/assignments_option"
-            android:icon="@drawable/assignment"
-            android:title="Assignments" />
-        <item
-            android:id="@+id/membership_option"
-            android:icon="@drawable/ic_membership"
-            android:title="Membership" />
+            android:id="@+id/mycourses_option"
+            android:icon="@drawable/ic_mycourses"
+            android:title="My Courses" />
         <item
             android:id="@+id/forum_option"
             android:icon="@drawable/ic_forum"
@@ -32,6 +28,10 @@
                 android:id="@+id/nav_aboutus"
                 android:icon="@drawable/ic_about_new"
                 android:title="About Us" />
+            <item
+                android:id="@+id/tnc_aboutus"
+                android:icon="@drawable/ic_tnc"
+                android:title="Terms &amp; Condition" />
         </menu>
     </item>
     <item

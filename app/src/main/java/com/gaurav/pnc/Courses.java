@@ -146,18 +146,23 @@ public class Courses extends AppCompatActivity {
                         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                         if(firebaseUser.getUid() !=null ){
-                            rootref.child("Users").child(firebaseUser.getUid()).child("Course_access").addListenerForSingleValueEvent(new ValueEventListener() {
+                            rootref.child("Users").child(firebaseUser.getUid()).child("Course_access").child(cource).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    System.out.println("Hello "+dataSnapshot.getValue().toString());
-                                    if (dataSnapshot.child(cource).child("has_access").getValue().toString().equals("YES")){
-                                        Intent i = new Intent(getApplicationContext(),SubjectPageActivity.class);
-                                        i.putExtra("cource",cource);
-                                        i.putExtra("sujectName",model.getName());
-                                        startActivity(i);
-                                    }else{
-                                        Toast.makeText(getApplicationContext(),"You Have not access to this course ! Please Contact Your admin or Faculty",Toast.LENGTH_LONG).show();
+                                    //System.out.println("Hello "+dataSnapshot.getValue().toString());
+                                    if (dataSnapshot.exists()) {
+                                        String has_access = dataSnapshot.child("has_access").getValue().toString();
+                                        if (has_access.equalsIgnoreCase("YES")) {
+                                            Intent i = new Intent(getApplicationContext(), SubjectPageActivity.class);
+                                            i.putExtra("cource", cource);
+                                            i.putExtra("sujectName", model.getName());
+                                            startActivity(i);
+                                        }
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "You Have not access to this course ! Please Contact Admin", Toast.LENGTH_LONG).show();
+
                                     }
+
                                 }
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -167,7 +172,6 @@ public class Courses extends AppCompatActivity {
                         }
                     }
                 });
-
             }
         };
 

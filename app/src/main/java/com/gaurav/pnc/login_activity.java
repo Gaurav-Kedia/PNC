@@ -1,17 +1,20 @@
 package com.gaurav.pnc;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.gaurav.pnc.Models.User_info;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,11 +49,22 @@ public class login_activity extends AppCompatActivity {
 
     private DatabaseReference user_ref;
     private List<String> fac;
+    final static String MyPREFERENCES = "login_details";
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+
+        sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        String islogin = sharedPreferences.getString("islogin", "false");
+        if (islogin.equalsIgnoreCase("true")) {
+            finish();
+            Intent mainactivity = new Intent(login_activity.this, Home_activity.class);
+            startActivity(mainactivity);
+        }
+
         mAuth = FirebaseAuth.getInstance();
         initialise();
 
@@ -160,15 +174,24 @@ public class login_activity extends AppCompatActivity {
             public void run() {
                 if (check_phone()) {
                     finish();
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("islogin", "true");
+                    editor.apply();
+
                     Intent mainactivity = new Intent(login_activity.this, Home_activity.class);
                     startActivity(mainactivity);
                     loadingBar.dismiss();
                 } else {
                     loadingBar.dismiss();
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("islogin", "true");
+                    editor.apply();
+
                     DatabaseReference rootref = FirebaseDatabase.getInstance().getReference();
                     String currentuserid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
                     HashMap<String, Object> onlineStatemap = new HashMap<>();
                     onlineStatemap.put("phone", phoneNumber);
+                    onlineStatemap.put("email", "xyz@example.com");
                     onlineStatemap.put("membership", "demo");
                     onlineStatemap.put("designation", "student");
                     onlineStatemap.put("info", "null_student");
@@ -179,7 +202,7 @@ public class login_activity extends AppCompatActivity {
                     startActivity(mainactivity);
                 }
             }
-        }, 5000);
+        }, 10000);
     }
 
     private void check_for_user() {
@@ -193,7 +216,6 @@ public class login_activity extends AppCompatActivity {
                     User_info f = new User_info();
                     String phone = p.getPhone();
                     f.setPhone(phone);
-                    Log.i("list_phone_numbers", phone);
                     fac.add(phone);
                 }
             }

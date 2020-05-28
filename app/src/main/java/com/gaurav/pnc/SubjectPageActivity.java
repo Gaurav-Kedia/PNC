@@ -2,12 +2,7 @@ package com.gaurav.pnc;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
@@ -18,6 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -132,6 +132,30 @@ public class SubjectPageActivity extends AppCompatActivity {
                     }
                 });
 
+                holder.studyMatbtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(getApplicationContext(), study_mat_list.class);
+                        i.putExtra("cource", Course);
+                        i.putExtra("sujectName", subject);
+                        i.putExtra("Chapter", model.getName());
+                        i.putExtra("code", (model.getSlno()) + "");
+                        startActivity(i);
+                    }
+                });
+
+                holder.AssignmentBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(getApplicationContext(), assign_list.class);
+                        i.putExtra("cource", Course);
+                        i.putExtra("sujectName", subject);
+                        i.putExtra("Chapter", model.getName());
+                        i.putExtra("code", (model.getSlno()) + "");
+                        startActivity(i);
+                    }
+                });
+
                 holder.chaptername.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -181,7 +205,7 @@ public class SubjectPageActivity extends AppCompatActivity {
             studyMatbtn = itemView.findViewById(R.id.studyMatbtn);
             AssignmentBtn = itemView.findViewById(R.id.AssignmentBtn);
 
-            AssignmentBtn.setOnClickListener(new View.OnClickListener() {
+            /*AssignmentBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(getApplicationContext(), "Not Available Now", Toast.LENGTH_SHORT).show();
@@ -192,7 +216,7 @@ public class SubjectPageActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Toast.makeText(getApplicationContext(), "Not Available Now", Toast.LENGTH_SHORT).show();
                 }
-            });
+            });*/
         }
     }
 

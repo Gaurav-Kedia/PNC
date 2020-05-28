@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         app:videoId="NHAIiAmxTAU"
         app:showVideoDuration="true"
-        app:autoPlay="true"
         app:showYouTubeButton="false"
         app:showFullScreenButton="true" />
 
